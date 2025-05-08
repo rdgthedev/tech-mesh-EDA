@@ -1,0 +1,1 @@
+﻿global using TechMesh.Domain.Interfaces.UnitOfWork;

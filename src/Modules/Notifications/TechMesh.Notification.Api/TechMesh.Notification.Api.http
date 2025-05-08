@@ -1,0 +1,6 @@
+@TechMesh.Notification.Api_HostAddress = http://localhost:5078
+
+GET {{TechMesh.Notification.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

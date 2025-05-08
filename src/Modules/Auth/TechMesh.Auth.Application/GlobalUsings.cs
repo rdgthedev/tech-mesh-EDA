@@ -1,0 +1,17 @@
+﻿global using System.Net;
+global using TechMesh.Auth.Application.Contracts.Services;
+global using TechMesh.Auth.Application.DTOs.Role.Request;
+global using TechMesh.Auth.Application.DTOs.Role.Response;
+global using TechMesh.Auth.Application.Mappers;
+global using TechMesh.Auth.Domain.Entities;
+global using System.Linq.Expressions;
+global using TechMesh.Auth.Application.DTOs.User.Request;
+global using TechMesh.Auth.Application.DTOs.User.Response;
+global using TechMesh.Domain.Interfaces.UnitOfWork;
+global using TechMesh.Auth.Application.DTOs.Auth.Response;
+global using System.Security.Cryptography;
+global using TechMesh.Auth.Domain.Enums;
+global using TechMesh.Auth.Application.DTOs.Auth.Request;
+global using TechMesh.Application.Results;
+global using TechMesh.Auth.Domain.Interfaces.Repositories;
+
