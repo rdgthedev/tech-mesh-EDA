@@ -1,13 +1,14 @@
-﻿namespace TechMesh.Infrastructure.UnitOfWork;
+﻿using Microsoft.EntityFrameworkCore;
 
-public class UnitOfWork : IUnitOfWork
+namespace TechMesh.Infrastructure.UnitOfWork;
+
+public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
 {
-    public UnitOfWork()
-    {
-    }
+    private readonly TContext _context;
 
-    public Task CommitAsync(CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    public UnitOfWork(TContext context)
+        => _context = context;
+
+    public async Task CommitAsync(CancellationToken cancellationToken)
+        => await _context.SaveChangesAsync(cancellationToken);
 }

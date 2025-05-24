@@ -8,6 +8,7 @@ public class User : AggregateRoot
     public PhoneNumber PhoneNumber { get; private set; }
     public Address Address { get; private set; }
     public EUserStatus Status { get; private set; }
+    public EUserLevel Level { get; private set; }
     public List<Technology> Skills { get; private set; }
 
     private User()
@@ -19,7 +20,8 @@ public class User : AggregateRoot
         Email email,
         BirthDate birthDate,
         PhoneNumber phoneNumber,
-        Address address)
+        Address address,
+        EUserLevel level)
     {
         FullName = fullName;
         Email = email;
@@ -28,6 +30,7 @@ public class User : AggregateRoot
         Address = address;
         Skills = [];
         Status = EUserStatus.Inactive;
+        Level = level;
 
         AddEvent(new UserCreatedEvent(
             Id,
@@ -37,7 +40,8 @@ public class User : AggregateRoot
             PhoneNumber.Value,
             Address,
             Skills,
-            Status));
+            Status,
+            Level));
     }
 
     public static User Create(
@@ -45,11 +49,12 @@ public class User : AggregateRoot
         Email email,
         BirthDate birthDate,
         PhoneNumber phoneNumber,
-        Address address)
+        Address address,
+        EUserLevel level)
     {
         Validate(fullName, email, birthDate, phoneNumber, address);
 
-        return new User(fullName, email, birthDate, phoneNumber, address);
+        return new User(fullName, email, birthDate, phoneNumber, address, level);
     }
 
     private static void Validate(

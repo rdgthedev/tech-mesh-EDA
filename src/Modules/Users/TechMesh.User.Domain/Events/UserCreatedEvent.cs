@@ -9,6 +9,7 @@ public class UserCreatedEvent : Event
     public Address Address { get; private set; }
     public List<Technology> Skills { get; private set; }
     public EUserStatus Status { get; private set; }
+    public EUserLevel Level { get; private set; }
 
     private UserCreatedEvent()
     {
@@ -22,7 +23,8 @@ public class UserCreatedEvent : Event
         string phoneNumber,
         Address address,
         List<Technology> skills,
-        EUserStatus status) : base(aggregateId)
+        EUserStatus status,
+        EUserLevel level) : base(aggregateId)
     {
         FullName = fullName;
         Email = email;
@@ -31,5 +33,6 @@ public class UserCreatedEvent : Event
         Address = address;
         Skills = skills;
         Status = status;
+        Level = level;
     }
 }

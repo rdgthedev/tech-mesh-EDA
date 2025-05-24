@@ -1,4 +1,6 @@
-﻿namespace TechMesh.Auth.Infrastructure.Persistence.Repositories;
+﻿using TechMesh.Auth.Infrastructure.Contexts;
+
+namespace TechMesh.Auth.Infrastructure.Persistence.Repositories;
 
 public class TokenRepository : ITokenRepository
 {
@@ -15,7 +17,7 @@ public class TokenRepository : ITokenRepository
 
     public async Task CreateAsync(Token token, CancellationToken cancellationToken)
         => await _context.Tokens.AddAsync(token, cancellationToken);
-
+    
     public async Task DeleteAsync(Token token, CancellationToken cancellationToken)
     {
         _context.Tokens.Remove(token);

@@ -1,6 +1,6 @@
 ﻿namespace TechMesh.Auth.Domain.Entities;
 
-[Table("Tokens", Schema = "auth")]
+[Table(nameof(Token), Schema = "auth")]
 public class Token : Entity
 {
     [Required]
@@ -27,4 +27,6 @@ public class Token : Entity
         ExpirationTime = expirationTime;
         Type = type;
     }
+
+    public override string ToString() => Value.ToString();
 }

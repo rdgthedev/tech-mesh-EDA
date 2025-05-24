@@ -2,10 +2,11 @@
 
 public interface IRoleService
 {
-    Task<Results> GetAllAsync(CancellationToken cancellationToken);
-    Task<Results> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-    Task<Results> GetByNameAsync(string name, CancellationToken cancellationToken);
-    Task<Results> CreateAsync(CreateRoleRequest createRoleRequest, CancellationToken cancellationToken);
-    Task<Results> UpdateAsync(Guid id, UpdateRoleRequest updateRoleRequest, CancellationToken cancellationToken);
-    Task<Results> DeleteAsync(Guid id, CancellationToken cancellationToken);
+    Task<Result<List<RoleResponse>>> GetAllAsync(CancellationToken cancellationToken);
+    Task<Result<RoleResponse?>> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<Result<RoleResponse>> GetByIdOrDefault(Guid? id, CancellationToken cancellationToken);
+    Task<Result<RoleResponse?>> GetByNameAsync(string name, CancellationToken cancellationToken);
+    Task<Result<bool>> CreateAsync(CreateRoleRequest createRoleRequest, CancellationToken cancellationToken);
+    Task<Result<bool>> UpdateAsync(Guid id, UpdateRoleRequest updateRoleRequest, CancellationToken cancellationToken);
+    Task<Result<bool>> DeleteAsync(Guid id, CancellationToken cancellationToken);
 }

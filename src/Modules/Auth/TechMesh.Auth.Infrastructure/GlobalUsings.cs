@@ -1,5 +1,4 @@
-﻿global using TechMesh.Auth.Infrastructure.Database;
-global using TechMesh.Domain.Interfaces.UnitOfWork;
+﻿global using TechMesh.Domain.Interfaces.UnitOfWork;
 global using TechMesh.Auth.Application.DTOs.Auth.Request;
 global using TechMesh.Auth.Application.DTOs.Auth.Response;
 global using System.Net;
@@ -15,3 +14,4 @@ global using System.Linq.Expressions;
 global using TechMesh.Auth.Domain.Interfaces.Repositories;
 global using TechMesh.Application.Results;
 global using TechMesh.Auth.Application.Interfaces.Services.Infra;
+global using TechMesh.Auth.Application.Interfaces.Services;

@@ -1,4 +1,4 @@
-﻿namespace TechMesh.Auth.Infrastructure.Database;
+﻿namespace TechMesh.Auth.Infrastructure.Contexts;
 
 public class ApplicationDbContext : DbContext
 {

@@ -19,6 +19,5 @@ public class Role : Entity
         Status = ERoleStatus.Active;
     }
 
-    public void ChangeName(string name)
-        => Name = name;
+    public void ChangeName(string name) => Name = name;
 }

@@ -1,6 +1,6 @@
 ﻿namespace TechMesh.Auth.Domain.Entities;
 
-[Table("User", Schema = "auth")]
+[Table(nameof(User), Schema = "auth")]
 public class User : Entity
 {
     [Required]
@@ -11,7 +11,7 @@ public class User : Entity
     [Required]
     [Column(TypeName = "VARCHAR")]
     [MaxLength(256)]
-    public string PasswordHash { get; private set; }
+    public string Password { get; private set; }
 
     [Required]
     [Column(TypeName = "VARCHAR")]
@@ -28,7 +28,7 @@ public class User : Entity
     private User(string email, string passwordHash)
     {
         Email = email;
-        PasswordHash = passwordHash;
+        Password = passwordHash;
         Status = EUserStatus.Active;
     }
 
@@ -41,20 +41,13 @@ public class User : Entity
         return user;
     }
 
-    public void UpdateEmail(string email)
-        => Email = email;
+    public void UpdateEmail(string email) => Email = email;
 
-    public void Activate()
-        => Status = EUserStatus.Active;
+    public void Activate() => Status = EUserStatus.Active;
 
-    public void Deactivate()
-        => Status = EUserStatus.Inactive;
+    public void Deactivate() => Status = EUserStatus.Inactive;
 
-    public void ChangeRole(Guid roleId)
-        => RoleId = roleId;
+    public void ChangeRole(Guid roleId) => RoleId = roleId;
 
-    private void AddRole(Guid roleId)
-    {
-        RoleId = roleId;
-    }
+    private void AddRole(Guid roleId) => RoleId = roleId;
 }

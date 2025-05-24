@@ -2,26 +2,44 @@
 
 public static class JwtHelper
 {
-    public static RSA ExtractRsaPrivateKey(string privateKey)
+    public static RSA ExtractRsaKey(string pemKey)
     {
-        if (string.IsNullOrEmpty(privateKey))
-            throw new Exception("Private key cannot be null or empty");
+        if (string.IsNullOrWhiteSpace(pemKey))
+            throw new ArgumentException("Key cannot be null or empty");
 
         var rsa = RSA.Create();
-        var privateKeyInBytes = Convert.FromBase64String(privateKey);
-        rsa.ImportPkcs8PrivateKey(privateKeyInBytes, out _);
 
-        return rsa;
-    }
+        string base64Key;
+        byte[] keyBytes;
 
-    public static RSA ExtractRsaPublicKey(string publicKey)
-    {
-        if (string.IsNullOrEmpty(publicKey))
-            throw new Exception("Public key cannot be null or empty");
+        if (pemKey.Contains("-----BEGIN PUBLIC KEY-----"))
+        {
+            base64Key = pemKey
+                .Replace("-----BEGIN PUBLIC KEY-----", string.Empty)
+                .Replace("-----END PUBLIC KEY-----", string.Empty)
+                .Replace("\r", string.Empty)
+                .Replace("\n", string.Empty)
+                .Trim();
 
-        var rsa = RSA.Create();
-        var publicKeyInBytes = Convert.FromBase64String(publicKey);
-        rsa.ImportSubjectPublicKeyInfo(publicKeyInBytes, out _);
+            keyBytes = Convert.FromBase64String(base64Key);
+            rsa.ImportSubjectPublicKeyInfo(keyBytes, out _);
+        }
+        else if (pemKey.Contains("-----BEGIN PRIVATE KEY-----"))
+        {
+            base64Key = pemKey
+                .Replace("-----BEGIN PRIVATE KEY-----", string.Empty)
+                .Replace("-----END PRIVATE KEY-----", string.Empty)
+                .Replace("\r", string.Empty)
+                .Replace("\n", string.Empty)
+                .Trim();
+
+            keyBytes = Convert.FromBase64String(base64Key);
+            rsa.ImportPkcs8PrivateKey(keyBytes, out _);
+        }
+        else
+        {
+            throw new ArgumentException("Unsupported or malformed PEM key.");
+        }
 
         return rsa;
     }

@@ -1,4 +1,6 @@
-﻿namespace TechMesh.Auth.Infrastructure.Persistence.Repositories;
+﻿using TechMesh.Auth.Infrastructure.Contexts;
+
+namespace TechMesh.Auth.Infrastructure.Persistence.Repositories;
 
 public class RoleRepository : IRoleRepository
 {

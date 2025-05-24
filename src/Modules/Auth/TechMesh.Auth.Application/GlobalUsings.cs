@@ -1,5 +1,4 @@
 ﻿global using System.Net;
-global using TechMesh.Auth.Application.Contracts.Services;
 global using TechMesh.Auth.Application.DTOs.Role.Request;
 global using TechMesh.Auth.Application.DTOs.Role.Response;
 global using TechMesh.Auth.Application.Mappers;
@@ -14,4 +13,6 @@ global using TechMesh.Auth.Domain.Enums;
 global using TechMesh.Auth.Application.DTOs.Auth.Request;
 global using TechMesh.Application.Results;
 global using TechMesh.Auth.Domain.Interfaces.Repositories;
-
+global using TechMesh.Auth.Application.Interfaces.Services;
+global using TechMesh.Auth.Application.Adapters.Interfaces;
+global using TechMesh.Auth.Application.Interfaces.Services.Infra;

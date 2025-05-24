@@ -9,11 +9,11 @@ public static class Mapper
 
     public static List<UserDetailsResponse> Map(List<User> users)
         => users
-            .Select(u => new UserDetailsResponse(u.Id, u.Email, u.PasswordHash, u.Role))
+            .Select(u => new UserDetailsResponse(u.Id, u.Email, u.Password, u.Role))
             .ToList();
 
-    public static UserDetailsResponse Map(User user) => new(user.Id, user.Email, user.PasswordHash, user.Role);
-
+    public static UserDetailsResponse Map(User user) => new(user.Id, user.Email, user.Password, user.Role);
+    
     public static TokenResponse? Map(Token? token)
         => token is null
             ? null

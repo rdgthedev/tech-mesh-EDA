@@ -6,7 +6,7 @@ public class BirthDate
 
     public BirthDate(DateTime value)
     {
-        DomainException.When(value > DateTime.Now, "Birth date cannot be in the future");
+        DomainException.When(value > DateTime.UtcNow, "Birth date cannot be in the future");
 
         Value = value;
     }

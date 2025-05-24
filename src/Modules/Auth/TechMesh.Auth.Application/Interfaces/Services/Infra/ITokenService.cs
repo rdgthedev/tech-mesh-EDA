@@ -2,7 +2,7 @@
 
 public interface ITokenService
 {
-    Task<Token> CreateAsync(Token token, CancellationToken cancellationToken);
+    Task<Result<TokenResponse>> CreateAsync(Token token, CancellationToken cancellationToken);
 
-    Task<Results> DeleteAsync(string token, CancellationToken cancellationToken);
+    Task<Result<bool>> DeleteAsync(string token, CancellationToken cancellationToken);
 }

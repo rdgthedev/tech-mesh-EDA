@@ -1,6 +1,6 @@
 ﻿namespace TechMesh.Auth.Application.DTOs.Auth.Response;
 
 public record TokenResponse(
-    string Token,
+    string Value,
     DateTime ExpirationTimeInMinutes,
     ETokenType Type);

@@ -1,6 +1,4 @@
-﻿using TechMesh.Auth.Domain.Enums;
-
-namespace TechMesh.Auth.Application.DTOs.Role.Response;
+﻿namespace TechMesh.Auth.Application.DTOs.Role.Response;
 
 public record RoleResponse(
     Guid Id,

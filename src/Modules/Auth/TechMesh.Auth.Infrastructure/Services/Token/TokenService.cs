@@ -13,31 +13,30 @@ public class TokenService : ITokenService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Domain.Entities.Token> CreateAsync(
+    public async Task<Result<TokenResponse>> CreateAsync(
         Domain.Entities.Token token,
         CancellationToken cancellationToken)
     {
-        if (token.ExpirationTime < DateTime.Now)
-            throw new Exception("The expiration time cannot less than that current time!");
-
         await _tokenRepository.CreateAsync(token, cancellationToken);
 
-        return token;
+        var tokenResponse = new TokenResponse(token.Value.ToString(), token.ExpirationTime, token.Type);
+
+        return Result<TokenResponse>.Success(tokenResponse);
     }
 
-    public async Task<Results> DeleteAsync(string token, CancellationToken cancellationToken)
+    public async Task<Result<bool>> DeleteAsync(string token, CancellationToken cancellationToken)
     {
         if (string.IsNullOrEmpty(token))
-            return Results.Failure(Convert.ToInt32(HttpStatusCode.BadRequest), "Token is empty!");
+            return Result<bool>.Failure(400, "Token is empty!");
 
         var tokenResult = await _tokenRepository.GetByTokenAsync(token, cancellationToken);
 
         if (tokenResult is null)
-            return Results.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "Token not exist!");
+            return Result<bool>.Failure(404, "Token not exist!");
 
         await _tokenRepository.DeleteAsync(tokenResult, cancellationToken);
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Results.Success(204);
+        return Result<bool>.Success();
     }
 }

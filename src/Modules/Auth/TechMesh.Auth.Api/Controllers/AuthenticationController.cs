@@ -1,9 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using TechMesh.Api.Controllers;
-using TechMesh.Auth.Application.DTOs.Auth.Request;
-using TechMesh.Auth.Application.Interfaces.Services.Infra;
-using Results = TechMesh.Application.Results.Results;
+﻿using TechMesh.Auth.Application.Interfaces.Services;
 
 namespace TechMesh.Auth.Api.Controllers;
 
@@ -13,24 +8,18 @@ public class AuthenticationController : BaseController
 {
     private readonly IAuthService _authService;
 
-    protected AuthenticationController(
-        IMediator mediator,
-        IAuthService authService) : base(mediator) => _authService = authService;
+    public AuthenticationController(IAuthService authService) => _authService = authService;
+
+    [HttpPost("register")]
+    public async Task<ActionResult<Result<AuthTokensResponse>>> Register(
+        [FromBody] RegisterUserRequest registerUserRequest,
+        CancellationToken cancellationToken)
+        => CustomResponse(await _authService.RegisterAsync(registerUserRequest, cancellationToken));
+
 
     [HttpPost("sign-in")]
-    public async Task<ActionResult<Results>> SignIn(
+    public async Task<ActionResult<Result<AuthTokensResponse>>> SignIn(
         [FromBody] SignInUserRequest signInUserRequest,
         CancellationToken cancellationToken)
-    {
-        try
-        {
-            var response = await _authService.SignInAsync(signInUserRequest, cancellationToken);
-
-            return response;
-        }
-        catch (Exception e)
-        {
-            throw;
-        }
-    }
+        => CustomResponse(await _authService.SignInAsync(signInUserRequest, cancellationToken));
 }

@@ -2,7 +2,6 @@
 
 public interface IJwtService
 {
-    string GenerateAccessToken(Guid userId, string roleName);
-    Token GenerateRefreshToken(Guid userId, DateTime expirationTime);
-    Results ValidateToken(string token);
+    Task<string> GenerateAccessToken(Guid userId, string roleName);
+    Task<Result<TokenResponse>> GenerateRefreshToken(Guid userId, CancellationToken cancellationToken);
 }

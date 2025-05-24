@@ -2,6 +2,7 @@
 
 public enum ETokenType
 {
-    RefreshToken = 0,
-    ConfirmationToken = 1
+    AccessToken = 0,
+    RefreshToken = 1,
+    ConfirmationToken = 2
 }
