@@ -6,10 +6,10 @@ public class User : AggregateRoot
     public Email Email { get; private set; }
     public BirthDate BirthDate { get; private set; }
     public PhoneNumber PhoneNumber { get; private set; }
-    public Address Address { get; private set; }
     public EUserStatus Status { get; private set; }
     public EUserLevel Level { get; private set; }
-    public List<Technology> Skills { get; private set; }
+    public Address Address { get; private set; }
+    public List<Technology> Technologies { get; private set; }
 
     private User()
     {
@@ -28,7 +28,7 @@ public class User : AggregateRoot
         BirthDate = birthDate;
         PhoneNumber = phoneNumber;
         Address = address;
-        Skills = [];
+        Technologies = [];
         Status = EUserStatus.Inactive;
         Level = level;
 
@@ -39,7 +39,7 @@ public class User : AggregateRoot
             BirthDate.Value,
             PhoneNumber.Value,
             Address,
-            Skills,
+            Technologies,
             Status,
             Level));
     }
@@ -91,13 +91,13 @@ public class User : AggregateRoot
 
         var skillsDescriptions = technologies.Select(s => s.Name);
 
-        var skillAlreadyExists = Skills.Any(s => skillsDescriptions.Contains(s.Name));
+        var skillAlreadyExists = Technologies.Any(s => skillsDescriptions.Contains(s.Name));
 
         DomainException.When(skillAlreadyExists, "The user already has one or more skills entered.");
 
-        Skills.AddRange(technologies);
+        Technologies.AddRange(technologies);
 
-        AddEvent(new UserAddedSkillsEvent(Id, Skills));
+        AddEvent(new UserAddedSkillsEvent(Id, Technologies));
     }
 
     public void UpdateDetails(

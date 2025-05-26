@@ -3,7 +3,7 @@
 public class Address
 {
     public string Street { get; private set; }
-    public string Neightborhood { get; private set; }
+    public string Neighborhood  { get; private set; }
     public string City { get; private set; }
     public string Country { get; private set; }
     public int Number { get; private set; }
@@ -28,7 +28,7 @@ public class Address
         DomainException.When(string.IsNullOrEmpty(complement), "Complement cannot be empty.");
 
         Street = street;
-        Neightborhood = neighborhood;
+        Neighborhood  = neighborhood;
         City = city;
         Country = country;
         Number = number;
@@ -42,7 +42,7 @@ public class Address
     {
         return obj is Address address
                && address.Street == Street
-               && address.Neightborhood == Neightborhood
+               && address.Neighborhood  == Neighborhood 
                && address.City == City
                && address.Country == Country
                && address.Number == Number;
@@ -50,11 +50,11 @@ public class Address
 
     public override string ToString() => $"{Street}," +
                                          $" {Number}" +
-                                         $" - {Neightborhood}," +
+                                         $" - {Neighborhood }," +
                                          $" {City}," +
                                          $" {Country} " +
                                          $"- {ZipCode} " +
                                          $"- {Complement}";
 
-    public override int GetHashCode() => HashCode.Combine(Street, Neightborhood, City, Country, Number);
+    public override int GetHashCode() => HashCode.Combine(Street, Neighborhood , City, Country, Number);
 }
