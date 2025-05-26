@@ -2,8 +2,8 @@
 
 public class UserAddedSkillsEvent : Event
 {
-    public List<Technology> Skills { get; private set; }
+    public List<UserTechnology> Skills { get; private set; }
 
-    public UserAddedSkillsEvent(Guid aggregateId, List<Technology> skills) : base(aggregateId)
+    public UserAddedSkillsEvent(Guid aggregateId, List<UserTechnology> skills) : base(aggregateId)
         => Skills = skills;
 }

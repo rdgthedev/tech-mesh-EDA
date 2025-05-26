@@ -3,10 +3,11 @@
 public class Address
 {
     public string Street { get; private set; }
-    public string Neighborhood  { get; private set; }
+    public string Neighborhood { get; private set; }
     public string City { get; private set; }
     public string Country { get; private set; }
     public int Number { get; private set; }
+    public string State { get; private set; }
     public string ZipCode { get; private set; }
     public string Complement { get; private set; }
 
@@ -28,7 +29,7 @@ public class Address
         DomainException.When(string.IsNullOrEmpty(complement), "Complement cannot be empty.");
 
         Street = street;
-        Neighborhood  = neighborhood;
+        Neighborhood = neighborhood;
         City = city;
         Country = country;
         Number = number;
@@ -42,19 +43,24 @@ public class Address
     {
         return obj is Address address
                && address.Street == Street
-               && address.Neighborhood  == Neighborhood 
+               && address.Neighborhood == Neighborhood
                && address.City == City
                && address.Country == Country
-               && address.Number == Number;
+               && address.Number == Number
+               && address.State == State
+               && address.ZipCode == ZipCode
+               && address.Complement == Complement;
     }
 
     public override string ToString() => $"{Street}," +
                                          $" {Number}" +
-                                         $" - {Neighborhood }," +
+                                         $" - {Neighborhood}," +
                                          $" {City}," +
-                                         $" {Country} " +
+                                         $" {State}" +
+                                         $"- {Country} " +
                                          $"- {ZipCode} " +
                                          $"- {Complement}";
 
-    public override int GetHashCode() => HashCode.Combine(Street, Neighborhood , City, Country, Number);
+    public override int GetHashCode()
+        => HashCode.Combine(Street, Neighborhood, City, Country, Number, State, ZipCode, Complement);
 }

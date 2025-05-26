@@ -11,4 +11,5 @@ public class UserDbContext : DbContext
 
     public DbSet<Domain.Entities.User> Users { get; set; }
     public DbSet<Technology> Technologies { get; set; }
+    public DbSet<UserTechnology> UserTechnologies { get; set; }
 }

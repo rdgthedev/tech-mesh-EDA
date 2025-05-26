@@ -7,7 +7,7 @@ public class UserCreatedEvent : Event
     public DateTime BirthDate { get; private set; }
     public string PhoneNumber { get; private set; }
     public Address Address { get; private set; }
-    public List<Technology> Skills { get; private set; }
+    public List<UserTechnology> Skills { get; private set; }
     public EUserStatus Status { get; private set; }
     public EUserLevel Level { get; private set; }
 
@@ -22,7 +22,7 @@ public class UserCreatedEvent : Event
         DateTime birthDate,
         string phoneNumber,
         Address address,
-        List<Technology> skills,
+        List<UserTechnology> skills,
         EUserStatus status,
         EUserLevel level) : base(aggregateId)
     {

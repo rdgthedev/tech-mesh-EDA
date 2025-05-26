@@ -3,7 +3,7 @@
 public class Technology : Entity
 {
     public TechnologyName Name { get; private set; } = null!;
-    public IReadOnlyCollection<User> Users { get; private set; } = null!;
+    public IReadOnlyCollection<UserTechnology> Users { get; private set; } = null!;
 
     private Technology()
     {

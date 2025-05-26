@@ -9,7 +9,7 @@ public class User : AggregateRoot
     public EUserStatus Status { get; private set; }
     public EUserLevel Level { get; private set; }
     public Address Address { get; private set; }
-    public List<Technology> Technologies { get; private set; }
+    public List<UserTechnology> Technologies { get; private set; }
 
     private User()
     {
@@ -85,13 +85,13 @@ public class User : AggregateRoot
         AddEvent(new UserDeactivedEvent(Id, Status));
     }
 
-    public void AddSkills(params Technology[] technologies)
+    public void AddSkills(params UserTechnology[] technologies)
     {
         DomainException.When(!technologies.Any(), "The skills cannot empty.");
 
-        var skillsDescriptions = technologies.Select(s => s.Name);
+        var skillsDescriptions = technologies.Select(s => s.TechnologyId);
 
-        var skillAlreadyExists = Technologies.Any(s => skillsDescriptions.Contains(s.Name));
+        var skillAlreadyExists = Technologies.Any(s => skillsDescriptions.Contains(s.TechnologyId));
 
         DomainException.When(skillAlreadyExists, "The user already has one or more skills entered.");
 
