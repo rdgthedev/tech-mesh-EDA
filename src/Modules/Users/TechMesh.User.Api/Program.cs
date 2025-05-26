@@ -6,6 +6,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyAllowSpecificOrigins",
+                          policy =>
+                          {
+                              policy.WithOrigins("http://example.com",
+                                                  "http://www.contoso.com")
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                          });
+});
+
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -18,5 +30,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("MyAllowSpecificOrigins");
 
 app.Run();
