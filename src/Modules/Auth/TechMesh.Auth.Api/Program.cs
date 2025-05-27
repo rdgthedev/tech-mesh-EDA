@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Refit;
 using TechMesh.Api.Middlewares;
 using TechMesh.Auth.Application.Adapters;
 using TechMesh.Auth.Application.Adapters.Interfaces;
@@ -9,6 +10,7 @@ using TechMesh.Auth.Infrastructure;
 using TechMesh.Auth.Infrastructure.Contexts;
 using TechMesh.Auth.Infrastructure.Persistence.Repositories;
 using TechMesh.Auth.Infrastructure.Services.Auth;
+using TechMesh.Auth.Infrastructure.Services.Externals;
 using TechMesh.Auth.Infrastructure.Services.Token;
 using TechMesh.Domain.Interfaces.UnitOfWork;
 using TechMesh.Infrastructure.UnitOfWork;
@@ -49,6 +51,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //     });
 //
 // builder.Services.AddAuthorization();
+
+builder.Services.AddRefitClient<IUserServiceApi>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["ExternalServices:UserService:BaseUrl"] ?? string.Empty));
 
 builder.Services.AddTransient<IPasswordHasherAdapter, PasswordHasherAdapter>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();

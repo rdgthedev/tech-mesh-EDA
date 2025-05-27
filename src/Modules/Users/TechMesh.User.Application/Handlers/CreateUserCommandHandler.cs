@@ -5,18 +5,15 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserFactory _userFactory;
-    private readonly IValidator<CreateUserCommand> _createUserValidator;
 
     public CreateUserCommandHandler(
         IUserRepository userRepository,
         IUnitOfWork unitOfWork,
-        IUserFactory userFactory,
-        IValidator<CreateUserCommand> createUserValidator)
+        IUserFactory userFactory)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
         _userFactory = userFactory;
-        _createUserValidator = createUserValidator;
     }
 
     public async Task<Result<string>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
