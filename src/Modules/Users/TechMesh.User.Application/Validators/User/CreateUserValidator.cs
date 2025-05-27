@@ -29,10 +29,6 @@ public class CreateUserValidator : AbstractValidator<CreateUserCommand>
             .Matches(PhoneNumberPattern)
             .WithMessage("Invalid phone number format.");
 
-        RuleFor(x => x.Status)
-            .IsInEnum()
-            .WithMessage("Invalid status.");
-
         RuleFor(x => x.Level)
             .IsInEnum()
             .WithMessage("Invalid level.");
@@ -64,7 +60,10 @@ public class CreateUserValidator : AbstractValidator<CreateUserCommand>
             .WithMessage("Invalid zip code format.");
 
         RuleFor(x => x.Technologies)
+            .NotEmpty()
+            .WithMessage("At least one technology is required.")
             .Must(x => x.Count > 0)
+            .When(x => x.Technologies != null)
             .WithMessage("At least one technology is required.");
     }
 }

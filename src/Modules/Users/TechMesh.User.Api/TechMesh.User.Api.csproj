@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TechMesh.User.Infrastructure\TechMesh.User.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\TechMesh.Api\TechMesh.Api.csproj" />
+    <ProjectReference Include="..\TechMesh.User.Application\TechMesh.User.Application.csproj" />
   </ItemGroup>
 
 </Project>

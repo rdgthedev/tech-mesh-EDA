@@ -8,7 +8,6 @@ public sealed class CreateUserCommand : Command<Result<string>>
     public string Email { get; set; } = string.Empty;
     public DateTime BirthDate { get; set; }
     public string PhoneNumber { get; set; } = string.Empty;
-    public EUserStatus Status { get; set; }
     public EUserLevel Level { get; set; }
     public string Street { get; set; } = string.Empty;
     public string Neighborhood { get; set; } = string.Empty;
