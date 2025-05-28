@@ -17,6 +17,7 @@ public class Address
         string city,
         string country,
         int number,
+        string state,
         string zipCode,
         string complement)
     {
@@ -25,6 +26,7 @@ public class Address
         DomainException.When(string.IsNullOrEmpty(city), "City cannot be empty.");
         DomainException.When(string.IsNullOrEmpty(country), "Country cannot be empty.");
         DomainException.When(number <= 0, "Number must be greater than zero.");
+        DomainException.When(string.IsNullOrEmpty(state), "State is required.");
         DomainException.When(string.IsNullOrEmpty(zipCode), "Zip code cannot be empty.");
         DomainException.When(string.IsNullOrEmpty(complement), "Complement cannot be empty.");
 
@@ -33,6 +35,7 @@ public class Address
         City = city;
         Country = country;
         Number = number;
+        State = state;
         ZipCode = zipCode;
         Complement = complement;
     }

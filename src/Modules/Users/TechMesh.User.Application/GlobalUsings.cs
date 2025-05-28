@@ -11,3 +11,4 @@ global using FluentValidation.Results;
 global using TechMesh.User.Application.Factories.Interfaces;
 global using TechMesh.User.Application.Abstracts;
 global using TechMesh.User.Application.Validators.User;
+global using System.Net;

@@ -23,6 +23,6 @@ public class TechnologyMapping : IEntityTypeConfiguration<Technology>
 
         builder.Property(u => u.UpdatedAt)
             .HasColumnName(nameof(Entity.UpdatedAt))
-            .IsRequired();
+            .IsRequired(false);
     }
 }

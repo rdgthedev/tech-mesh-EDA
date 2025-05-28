@@ -4,7 +4,7 @@ public class UserTechnologyMapping : IEntityTypeConfiguration<UserTechnology>
 {
     public void Configure(EntityTypeBuilder<UserTechnology> builder)
     {
-        builder.ToTable("UserTechnology", "user");
+        builder.ToTable("users_technologies", "user");
 
         builder.HasKey(ut => new { ut.UserId, ut.TechnologyId });
 

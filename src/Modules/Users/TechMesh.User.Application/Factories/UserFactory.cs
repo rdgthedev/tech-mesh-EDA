@@ -12,6 +12,7 @@ public class UserFactory : IUserFactory
             request.City,
             request.Country,
             request.Number,
+            request.State,
             request.ZipCode,
             request.Complement!);
 

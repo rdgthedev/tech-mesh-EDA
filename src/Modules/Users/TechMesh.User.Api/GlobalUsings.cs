@@ -9,3 +9,7 @@ global using TechMesh.User.Application.Handlers;
 global using TechMesh.User.Domain.Interfaces.Repositories;
 global using TechMesh.User.Infrastructure.Context;
 global using TechMesh.User.Infrastructure.Persistence.Repositories;
+global using Microsoft.AspNetCore.Mvc;
+global using TechMesh.Api.Controllers;
+global using TechMesh.Application.Results;
+global using TechMesh.User.Application.Command.User;

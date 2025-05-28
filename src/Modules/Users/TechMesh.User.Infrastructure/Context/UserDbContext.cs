@@ -8,6 +8,7 @@ public class UserDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         builder.ApplyConfigurationsFromAssembly(typeof(UserMapping).Assembly);
     }
 

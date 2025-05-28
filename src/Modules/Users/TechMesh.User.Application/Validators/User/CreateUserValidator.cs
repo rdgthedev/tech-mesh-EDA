@@ -48,6 +48,10 @@ public class CreateUserValidator : AbstractValidator<CreateUserCommand>
             .GreaterThan(0)
             .WithMessage("Number must be greater than 0.");
 
+        RuleFor(x => x.State)
+            .NotEmpty()
+            .WithMessage("State is required.");
+
         RuleFor(x => x.ZipCode)
             .NotEmpty()
             .WithMessage("ZipCode is required.");

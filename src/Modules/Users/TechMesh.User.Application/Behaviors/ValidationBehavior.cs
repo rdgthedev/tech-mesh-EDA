@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace TechMesh.User.Application.Behaviors;
+﻿namespace TechMesh.User.Application.Behaviors;
 
 public sealed class ValidationBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>

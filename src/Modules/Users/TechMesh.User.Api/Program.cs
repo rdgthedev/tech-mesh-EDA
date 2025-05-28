@@ -29,7 +29,6 @@ builder.Services.AddMediatR(cfg =>
 });
 
 builder.Services.AddValidatorsFromAssembly(typeof(CreateUserValidator).Assembly);
-
 // builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 builder.Services.AddTransient<IUserFactory, UserFactory>();

@@ -85,7 +85,7 @@ public class User : AggregateRoot
         AddEvent(new UserDeactivedEvent(Id, Status));
     }
 
-    public void AddSkills(params UserTechnology[] technologies)
+    public void AddTechnology(params UserTechnology[] technologies)
     {
         DomainException.When(!technologies.Any(), "The skills cannot empty.");
 

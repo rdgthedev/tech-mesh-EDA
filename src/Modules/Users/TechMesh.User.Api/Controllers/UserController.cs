@@ -1,10 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using TechMesh.Api.Controllers;
-using TechMesh.Application.Results;
-using TechMesh.User.Application.Command.User;
-
-namespace TechMesh.User.Api.Controllers
+﻿namespace TechMesh.User.Api.Controllers
 {
     [ApiController]
     [Route("v1")]

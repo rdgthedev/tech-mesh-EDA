@@ -109,7 +109,7 @@ public class UserMapping : IEntityTypeConfiguration<Domain.Entities.User>
 
         builder.Property(u => u.UpdatedAt)
             .HasColumnName(nameof(Entity.UpdatedAt))
-            .IsRequired();
+            .IsRequired(false);
 
         builder.Ignore(u => u.Events);
     }
