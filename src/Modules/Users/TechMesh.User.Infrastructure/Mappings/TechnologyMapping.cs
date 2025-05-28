@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TechMesh.Domain.Entities;
-using TechMesh.User.Domain.Entities;
-
-namespace TechMesh.User.Infrastructure.Mappings;
+﻿namespace TechMesh.User.Infrastructure.Mappings;
 
 public class TechnologyMapping : IEntityTypeConfiguration<Technology>
 {
@@ -12,10 +7,6 @@ public class TechnologyMapping : IEntityTypeConfiguration<Technology>
         builder.ToTable("technologies", "user");
 
         builder.HasKey(t => t.Id);
-
-        builder.Property(t => t.Id)
-            .UseIdentityColumn()
-            .ValueGeneratedOnAdd();
 
         builder.OwnsOne(t => t.Name, name =>
         {

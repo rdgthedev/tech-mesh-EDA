@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TechMesh.Domain.Entities;
-using TechMesh.User.Domain.ValueObjects;
-
-namespace TechMesh.User.Infrastructure.Mappings;
+﻿namespace TechMesh.User.Infrastructure.Mappings;
 
 public class UserMapping : IEntityTypeConfiguration<Domain.Entities.User>
 {
@@ -12,10 +7,6 @@ public class UserMapping : IEntityTypeConfiguration<Domain.Entities.User>
         builder.ToTable("users", "user");
 
         builder.HasKey(u => u.Id);
-
-        builder.Property(u => u.Id)
-            .UseIdentityColumn()
-            .ValueGeneratedOnAdd();
 
         builder.OwnsOne(u => u.FullName, fullName =>
         {
@@ -106,7 +97,7 @@ public class UserMapping : IEntityTypeConfiguration<Domain.Entities.User>
             .HasColumnName(nameof(Domain.Entities.User.Status))
             .HasConversion<string>()
             .IsRequired();
-        
+
         builder.Property(u => u.Level)
             .HasColumnName(nameof(Domain.Entities.User.Level))
             .HasConversion<string>()
@@ -119,5 +110,7 @@ public class UserMapping : IEntityTypeConfiguration<Domain.Entities.User>
         builder.Property(u => u.UpdatedAt)
             .HasColumnName(nameof(Entity.UpdatedAt))
             .IsRequired();
+
+        builder.Ignore(u => u.Events);
     }
 }

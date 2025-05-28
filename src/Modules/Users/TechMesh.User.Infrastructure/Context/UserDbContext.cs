@@ -1,12 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TechMesh.User.Domain.Entities;
-
-namespace TechMesh.User.Infrastructure.Context;
+﻿namespace TechMesh.User.Infrastructure.Context;
 
 public class UserDbContext : DbContext
 {
     public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
     {
+    }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.ApplyConfigurationsFromAssembly(typeof(UserMapping).Assembly);
     }
 
     public DbSet<Domain.Entities.User> Users { get; set; }
