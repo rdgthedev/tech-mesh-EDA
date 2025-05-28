@@ -17,6 +17,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TechMesh.User.Domain\TechMesh.User.Domain.csproj" />
+      <ProjectReference Include="..\..\..\BuildingBlocks\TechMesh.Infrastructure\TechMesh.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

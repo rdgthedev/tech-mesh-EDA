@@ -1,0 +1,11 @@
+﻿global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using TechMesh.Domain.Interfaces.UnitOfWork;
+global using TechMesh.Infrastructure.UnitOfWork;
+global using TechMesh.User.Application.Behaviors;
+global using TechMesh.User.Application.Factories;
+global using TechMesh.User.Application.Factories.Interfaces;
+global using TechMesh.User.Application.Handlers;
+global using TechMesh.User.Domain.Interfaces.Repositories;
+global using TechMesh.User.Infrastructure.Context;
+global using TechMesh.User.Infrastructure.Persistence.Repositories;

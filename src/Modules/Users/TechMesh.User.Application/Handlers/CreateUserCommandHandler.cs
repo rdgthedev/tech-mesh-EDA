@@ -18,10 +18,6 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
 
     public async Task<Result<string>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        if (!request.ValidationResult.IsValid)
-            return Result<string>
-                .Failure(400, request.ValidationResult.Errors.Select(x => x.ErrorMessage).ToArray());
-
         var user = _userFactory.Create(request);
 
         await _userRepository.CreateAsync(user, cancellationToken);

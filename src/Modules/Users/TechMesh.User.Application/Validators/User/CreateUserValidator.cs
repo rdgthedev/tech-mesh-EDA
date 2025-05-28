@@ -2,14 +2,11 @@
 
 public class CreateUserValidator : AbstractValidator<CreateUserCommand>
 {
-    private const string PhoneNumberPattern = @"^\+?[1-9]\d{1,14}$";
-    private const string ZipCodePattern = "^[0-9]{5}(?:-[0-9]{4})?$";
-
     public CreateUserValidator()
     {
         RuleFor(x => x.FullName)
             .NotEmpty()
-            .WithMessage("First name is required.")
+            .WithMessage("Full name is required.")
             .Length(3, 128)
             .WithMessage("First name must be between 2 and 50 characters.");
 
@@ -20,14 +17,12 @@ public class CreateUserValidator : AbstractValidator<CreateUserCommand>
             .WithMessage("Invalid email format.");
 
         RuleFor(x => x.BirthDate)
-            .Must(date => date.IsAfterToday())
+            .Must(date => date.IsBeforeToday())
             .WithMessage("Birth date must be before today.");
 
         RuleFor(x => x.PhoneNumber)
             .NotEmpty()
-            .WithMessage("Phone number is required.")
-            .Matches(PhoneNumberPattern)
-            .WithMessage("Invalid phone number format.");
+            .WithMessage("Phone number is required.");
 
         RuleFor(x => x.Level)
             .IsInEnum()
@@ -55,15 +50,10 @@ public class CreateUserValidator : AbstractValidator<CreateUserCommand>
 
         RuleFor(x => x.ZipCode)
             .NotEmpty()
-            .WithMessage("ZipCode is required.")
-            .Matches(ZipCodePattern)
-            .WithMessage("Invalid zip code format.");
+            .WithMessage("ZipCode is required.");
 
         RuleFor(x => x.Technologies)
             .NotEmpty()
-            .WithMessage("At least one technology is required.")
-            .Must(x => x.Count > 0)
-            .When(x => x.Technologies != null)
             .WithMessage("At least one technology is required.");
     }
 }
