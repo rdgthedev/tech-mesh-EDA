@@ -49,11 +49,11 @@ public class AuthService : IAuthService
         if (!apiResponse.IsSuccess)
             return Result<AuthTokensResponse>.Failure(apiResponse.StatusCode, apiResponse.Errors.ToArray());
 
+        await _userService.CreateAsync(user, cancellationToken);
+
         var accessToken = await _jwtService.GenerateAccessToken(user.Id, roleResponse.Data.Name);
 
         var refreshToken = (await _jwtService.GenerateRefreshToken(user.Id, cancellationToken)).Data!.Value;
-
-        await _userService.CreateAsync(user, cancellationToken);
 
         await _unitOfWork.CommitAsync(cancellationToken);
 

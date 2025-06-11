@@ -22,6 +22,7 @@ public static class JwtHelper
                 .Trim();
 
             keyBytes = Convert.FromBase64String(base64Key);
+
             rsa.ImportSubjectPublicKeyInfo(keyBytes, out _);
         }
         else if (pemKey.Contains("-----BEGIN PRIVATE KEY-----"))
@@ -34,6 +35,7 @@ public static class JwtHelper
                 .Trim();
 
             keyBytes = Convert.FromBase64String(base64Key);
+
             rsa.ImportPkcs8PrivateKey(keyBytes, out _);
         }
         else

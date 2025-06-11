@@ -2,7 +2,9 @@
 
 public static class InfraConfigurations
 {
-    public static void AddAuthenticationConfigurations(this IServiceCollection services)
+    public static void AddAuthenticationConfigurations(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddAuthentication(options =>
             {
@@ -19,10 +21,11 @@ public static class InfraConfigurations
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-
                     ValidIssuer = "Issuer",
                     ValidAudience = "Audience",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("")),
+                    IssuerSigningKey =
+                        new RsaSecurityKey(
+                            JwtHelper.ExtractRsaKey(configuration["JwtOptions:PublicKey"] ?? string.Empty)),
                     ClockSkew = TimeSpan.Zero // evita tolerância de tempo
                 };
             });
