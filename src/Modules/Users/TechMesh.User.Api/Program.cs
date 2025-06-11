@@ -1,5 +1,8 @@
 using FluentValidation;
+using TechMesh.User.Api;
+using TechMesh.User.Application;
 using TechMesh.User.Application.Validators.User;
+using TechMesh.User.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,33 +10,15 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("MyAllowSpecificOrigins",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:5297")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
-
-builder.Services.AddDbContext<UserDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddMediatR(cfg =>
-{
-    cfg.RegisterServicesFromAssembly(typeof(CreateUserCommandHandler).Assembly);
-    cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
-});
-
-builder.Services.AddValidatorsFromAssembly(typeof(CreateUserValidator).Assembly);
-// builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+builder.Services.AddCorsConfigurations();
+builder.Services.AddDbConfigurations(builder.Configuration);
+builder.Services.AddValidatorsConfigurations();
+builder.Services.AddMediatRConfigurations();
 
 builder.Services.AddTransient<IUserFactory, UserFactory>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork<UserDbContext>>();
+
+builder.Services.AddRepositoriesConfigurations();
+builder.Services.AddUnitOfWorkConfigurations();
 
 var app = builder.Build();
 

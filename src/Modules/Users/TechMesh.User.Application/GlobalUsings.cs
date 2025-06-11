@@ -1,6 +1,5 @@
 ﻿global using MediatR;
 global using FluentValidation;
-global using TechMesh.User.Application.Extensions;
 global using TechMesh.Application.Results;
 global using TechMesh.Domain.Interfaces.UnitOfWork;
 global using TechMesh.User.Application.Command.User;
@@ -12,3 +11,4 @@ global using TechMesh.User.Application.Factories.Interfaces;
 global using TechMesh.User.Application.Abstracts;
 global using TechMesh.User.Application.Validators.User;
 global using System.Net;
+global using TechMesh.User.Domain.ValueObjects;

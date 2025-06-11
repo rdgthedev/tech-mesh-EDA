@@ -1,6 +1,4 @@
-﻿using TechMesh.User.Domain.ValueObjects;
-
-namespace TechMesh.User.Application.Factories;
+﻿namespace TechMesh.User.Application.Factories;
 
 public class UserFactory : IUserFactory
 {
