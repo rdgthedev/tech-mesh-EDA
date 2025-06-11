@@ -17,3 +17,5 @@ global using TechMesh.Auth.Application.Interfaces.Services;
 global using TechMesh.Auth.Application.Interfaces.Services.Infra;
 global using TechMesh.Auth.Application.DTOs.Externals;
 global using TechMesh.Auth.Application.Interfaces.Adapters;
+global using Microsoft.Extensions.DependencyInjection;
+global using TechMesh.Auth.Application.Services;
