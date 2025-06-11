@@ -4,8 +4,6 @@ public abstract class Command<TResult> : IRequest<TResult> where TResult : class
 {
     [JsonIgnore] public ValidationResult ValidationResult { get; set; }
 
-    protected Command()
+    public Command()
         => ValidationResult = new ValidationResult();
-
-    protected abstract ValidationResult Validate();
 }

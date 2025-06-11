@@ -2,8 +2,6 @@
 
 public sealed class CreateUserCommand : Command<Result<string>>
 {
-    public CreateUserCommand() => ValidationResult = Validate();
-
     public string FullName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public DateTime BirthDate { get; set; }
@@ -18,7 +16,4 @@ public sealed class CreateUserCommand : Command<Result<string>>
     public string ZipCode { get; set; } = string.Empty;
     public string? Complement { get; set; }
     public List<string> Technologies { get; set; } = null!;
-
-    protected override ValidationResult Validate()
-        => new CreateUserValidator().Validate(this);
 }

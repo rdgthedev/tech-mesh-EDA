@@ -1,20 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Refit;
-using TechMesh.Api.Middlewares;
-using TechMesh.Auth.Application.Adapters;
-using TechMesh.Auth.Application.Adapters.Interfaces;
-using TechMesh.Auth.Application.Interfaces.Services;
-using TechMesh.Auth.Application.Services;
-using TechMesh.Auth.Domain.Interfaces.Repositories;
-using TechMesh.Auth.Infrastructure;
-using TechMesh.Auth.Infrastructure.Contexts;
-using TechMesh.Auth.Infrastructure.Persistence.Repositories;
-using TechMesh.Auth.Infrastructure.Services.Auth;
-using TechMesh.Auth.Infrastructure.Services.Externals;
-using TechMesh.Auth.Infrastructure.Services.Token;
-using TechMesh.Domain.Interfaces.UnitOfWork;
-using TechMesh.Infrastructure.UnitOfWork;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
@@ -34,7 +17,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //     })
 //     .AddJwtBearer(options =>
 //     {
-//         options.RequireHttpsMetadata = true; // Mantenha true em produção
+//         options.RequireHttpsMetadata = true;
 //         options.SaveToken = true;
 //         options.TokenValidationParameters = new TokenValidationParameters
 //         {
@@ -53,9 +36,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // builder.Services.AddAuthorization();
 
 builder.Services.AddRefitClient<IUserServiceApi>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["ExternalServices:UserService:BaseUrl"] ?? string.Empty));
+    .ConfigureHttpClient(c =>
+        c.BaseAddress = new Uri(builder.Configuration["ExternalServices:UserService:BaseUrl"] ?? string.Empty))
+    .AddTypedClient(c => RestService.For<IUserServiceApi>(c, new RefitSettings
+    {
+        ContentSerializer = new SystemTextJsonContentSerializer(new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        })
+    }));
+
 
 builder.Services.AddTransient<IPasswordHasherAdapter, PasswordHasherAdapter>();
+builder.Services.AddScoped<IUserServiceApiRefitAdapter, UserServiceApiRefitAdapter>();
+
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();

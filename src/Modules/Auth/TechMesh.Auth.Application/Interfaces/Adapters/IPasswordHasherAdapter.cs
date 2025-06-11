@@ -1,4 +1,4 @@
-﻿namespace TechMesh.Auth.Application.Adapters.Interfaces;
+﻿namespace TechMesh.Auth.Application.Interfaces.Adapters;
 
 public interface IPasswordHasherAdapter
 {

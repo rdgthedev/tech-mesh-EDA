@@ -1,4 +1,6 @@
-﻿namespace TechMesh.Auth.Application.Adapters;
+﻿using TechMesh.Auth.Application.Interfaces.Adapters;
+
+namespace TechMesh.Auth.Infrastructure.Services.Auth;
 
 public class PasswordHasherAdapter : IPasswordHasherAdapter
 {

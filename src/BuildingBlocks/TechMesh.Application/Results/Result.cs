@@ -6,7 +6,7 @@ public class Result<TData>
     public string? Message { get; private set; }
     public bool IsSuccess { get; private set; }
     public TData? Data { get; private set; }
-    public List<string> Errors { get; set; } = new();
+    public List<string> Errors { get; private set; } = [];
 
 
     private Result(TData data, string message)

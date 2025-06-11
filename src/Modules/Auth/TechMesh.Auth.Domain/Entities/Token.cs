@@ -1,6 +1,6 @@
 ﻿namespace TechMesh.Auth.Domain.Entities;
 
-[Table(nameof(Token), Schema = "auth")]
+[Table("Tokens", Schema = "auth")]
 public class Token : Entity
 {
     [Required]

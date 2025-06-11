@@ -29,14 +29,14 @@ namespace TechMesh.User.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("CreatedAt");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("UpdatedAt");
 
                     b.HasKey("Id");
@@ -51,7 +51,7 @@ namespace TechMesh.User.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("CreatedAt");
 
                     b.Property<DateTime?>("DeletedAt")
@@ -68,7 +68,7 @@ namespace TechMesh.User.Infrastructure.Migrations
                         .HasColumnName("Status");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("UpdatedAt");
 
                     b.HasKey("Id");

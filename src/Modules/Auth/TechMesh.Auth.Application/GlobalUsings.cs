@@ -14,5 +14,6 @@ global using TechMesh.Auth.Application.DTOs.Auth.Request;
 global using TechMesh.Application.Results;
 global using TechMesh.Auth.Domain.Interfaces.Repositories;
 global using TechMesh.Auth.Application.Interfaces.Services;
-global using TechMesh.Auth.Application.Adapters.Interfaces;
 global using TechMesh.Auth.Application.Interfaces.Services.Infra;
+global using TechMesh.Auth.Application.DTOs.Externals;
+global using TechMesh.Auth.Application.Interfaces.Adapters;

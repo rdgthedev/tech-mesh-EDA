@@ -7,19 +7,22 @@ public class AuthService : IAuthService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserService _userService;
     private readonly IPasswordHasherAdapter _passwordHasherAdapter;
+    private readonly IUserServiceApiRefitAdapter _userServiceApiRefitAdapter;
 
     public AuthService(
         IUserService userService,
         IJwtService jwtService,
         IRoleService roleService,
         IUnitOfWork unitOfWork,
-        IPasswordHasherAdapter passwordHasherAdapter)
+        IPasswordHasherAdapter passwordHasherAdapter,
+        IUserServiceApiRefitAdapter userServiceApiRefitAdapter)
     {
         _userService = userService;
         _jwtService = jwtService;
         _roleService = roleService;
         _unitOfWork = unitOfWork;
         _passwordHasherAdapter = passwordHasherAdapter;
+        _userServiceApiRefitAdapter = userServiceApiRefitAdapter;
     }
 
     public async Task<Result<AuthTokensResponse>> RegisterAsync(
@@ -28,31 +31,36 @@ public class AuthService : IAuthService
     {
         var userExistsResponse = await _userService
             .ExistsAsync(u => u.Email == request.Email, cancellationToken);
-        
+
         if (userExistsResponse.IsSuccess)
-            return Result<AuthTokensResponse>.Failure(400, "User already exists!");
+            return Result<AuthTokensResponse>.Failure((int)HttpStatusCode.BadRequest, "User already exists!");
 
         var passwordHash = _passwordHasherAdapter.Hash(request.Password);
 
         var roleResponse = await _roleService.GetByIdOrDefault(request.RoleId, cancellationToken);
 
         if (!roleResponse.IsSuccess)
-            return Result<AuthTokensResponse>.Failure(404, "Role not found!");
+            return Result<AuthTokensResponse>.Failure((int)HttpStatusCode.NotFound, "Role not found!");
 
         var user = User.Create(request.Email, passwordHash, roleResponse.Data!.Id);
 
-        // chamar endpoint / api / users(POST) -> User Service 
+        var apiResponse = await _userServiceApiRefitAdapter.CreateUserAsync(Mapper.Map(request));
 
-        var accessToken = await _jwtService.GenerateAccessToken(user.Id, roleResponse.Data!.Name);
+        if (!apiResponse.IsSuccess)
+            return Result<AuthTokensResponse>.Failure(apiResponse.StatusCode, apiResponse.Errors.ToArray());
 
-        var refreshToken = (await _jwtService.GenerateRefreshToken(user.Id, cancellationToken)).Data?.Value;
+        var accessToken = await _jwtService.GenerateAccessToken(user.Id, roleResponse.Data.Name);
+
+        var refreshToken = (await _jwtService.GenerateRefreshToken(user.Id, cancellationToken)).Data!.Value;
 
         await _userService.CreateAsync(user, cancellationToken);
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Result<AuthTokensResponse>
-            .Success(201, new AuthTokensResponse(accessToken, refreshToken!), "User registered with success!");
+        return Result<AuthTokensResponse>.Success(
+            (int)HttpStatusCode.Created,
+            new AuthTokensResponse(accessToken, refreshToken),
+            "User registered with success!");
     }
 
     public async Task<Result<AuthTokensResponse>> SignInAsync(
@@ -63,14 +71,14 @@ public class AuthService : IAuthService
             .GetUserWithRoleByEmailAsync(signInUserRequest.Email, cancellationToken);
 
         if (!userResponse.IsSuccess)
-            return Result<AuthTokensResponse>.Failure(400, "Email or Password invalid!");
+            return Result<AuthTokensResponse>.Failure((int)HttpStatusCode.BadRequest, "Email or Password invalid!");
 
         var userData = userResponse.Data;
 
         var isPasswordValid = _passwordHasherAdapter.Verify(signInUserRequest.Password, userData?.PasswordHash!);
 
         if (!isPasswordValid)
-            return Result<AuthTokensResponse>.Failure(400, "Email or Password invalid!");
+            return Result<AuthTokensResponse>.Failure((int)HttpStatusCode.BadRequest, "Email or Password invalid!");
 
         var accessToken = await _jwtService.GenerateAccessToken(userData!.Id, userData.Role!.Name);
 

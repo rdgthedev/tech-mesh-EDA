@@ -19,10 +19,12 @@ public class TechnologyMapping : IEntityTypeConfiguration<Technology>
 
         builder.Property(u => u.CreatedAt)
             .HasColumnName(nameof(Entity.CreatedAt))
+            .HasColumnType("TIMESTAMP")
             .IsRequired();
 
         builder.Property(u => u.UpdatedAt)
             .HasColumnName(nameof(Entity.UpdatedAt))
+            .HasColumnType("TIMESTAMP")
             .IsRequired(false);
     }
 }
