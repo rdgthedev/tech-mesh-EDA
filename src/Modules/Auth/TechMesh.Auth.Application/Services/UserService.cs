@@ -21,8 +21,9 @@ public class UserService : IUserService
         var users = await _userRepository.GetAllAsync(cancellationToken);
 
         return !users.Any()
-            ? Result<List<UserDetailsResponse>>.Failure(404, null, "Users not found!")
-            : Result<List<UserDetailsResponse>>.Success(Mapper.Map(users), "Users found with success!");
+            ? Result<List<UserDetailsResponse>>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "Users not found!")
+            : Result<List<UserDetailsResponse>>.Success(Convert.ToInt32(HttpStatusCode.OK), Mapper.Map(users),
+                "Users found with success!");
     }
 
     public async Task<Result<UserDetailsResponse?>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
@@ -30,8 +31,9 @@ public class UserService : IUserService
         var user = await _userRepository.GetByIdAsync(id, cancellationToken);
 
         return user is null
-            ? Result<UserDetailsResponse?>.Failure(404, null, "Users not found!")
-            : Result<UserDetailsResponse?>.Success(Mapper.Map(user), "User found with success!");
+            ? Result<UserDetailsResponse?>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "Users not found!")
+            : Result<UserDetailsResponse?>.Success(Convert.ToInt32(HttpStatusCode.OK), Mapper.Map(user),
+                "User found with success!");
     }
 
     public async Task<Result<UserDetailsResponse?>> GetByEmail(string email, CancellationToken cancellationToken)
@@ -39,8 +41,9 @@ public class UserService : IUserService
         var user = await _userRepository.GetByEmail(email, cancellationToken);
 
         return user is null
-            ? Result<UserDetailsResponse?>.Failure(404, null, "User not found!")
-            : Result<UserDetailsResponse?>.Success(Mapper.Map(user), "User found with success!");
+            ? Result<UserDetailsResponse?>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "User not found!")
+            : Result<UserDetailsResponse?>.Success(Convert.ToInt32(HttpStatusCode.OK), Mapper.Map(user),
+                "User found with success!");
     }
 
     public async Task<Result<UserDetailsResponse?>> GetUserWithRoleByEmailAsync(
@@ -50,14 +53,16 @@ public class UserService : IUserService
         var user = await _userRepository.GetUserWithRoleByEmailAsync(email, cancellationToken);
 
         return user is null
-            ? Result<UserDetailsResponse?>.Failure(404, null, "User not found!")
-            : Result<UserDetailsResponse?>.Success(Mapper.Map(user), "User found with success!");
+            ? Result<UserDetailsResponse?>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "User not found!")
+            : Result<UserDetailsResponse?>.Success(
+                Convert.ToInt32(HttpStatusCode.OK),
+                Mapper.Map(user),
+                "User found with success!");
     }
 
     public async Task CreateAsync(User user, CancellationToken cancellationToken)
-    {
-        await _userRepository.CreateAsync(user, cancellationToken);
-    }
+        => await _userRepository.CreateAsync(user, cancellationToken);
+
 
     public async Task<Result<bool>> ExistsAsync(
         Expression<Func<User, bool>> expression,
@@ -66,8 +71,8 @@ public class UserService : IUserService
         var userExists = await _userRepository.ExistsAsync(expression, cancellationToken);
 
         return !userExists
-            ? Result<bool>.Failure(404, "User not found!")
-            : Result<bool>.Success(userExists, "User already exists!");
+            ? Result<bool>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "User not found!")
+            : Result<bool>.Success(Convert.ToInt32(HttpStatusCode.OK), userExists, "User already exists!");
     }
 
     public async Task<Result<Guid>> UpdateAsync(
@@ -77,7 +82,7 @@ public class UserService : IUserService
         var user = await _userRepository.GetByIdAsync(updateUserRequest.Id, cancellationToken);
 
         if (user is null)
-            return Result<Guid>.Failure(404, "User not found!");
+            return Result<Guid>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "User not found!");
 
         user.UpdateEmail(updateUserRequest.Email);
 
@@ -85,7 +90,7 @@ public class UserService : IUserService
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Result<Guid>.Success(user.Id, "User updated with success!");
+        return Result<Guid>.Success(Convert.ToInt32(HttpStatusCode.OK), user.Id, "User updated with success!");
     }
 
     public async Task<Result<bool>> DeactivateAsync(Guid id, CancellationToken cancellationToken)
@@ -93,7 +98,7 @@ public class UserService : IUserService
         var user = await _userRepository.GetByIdAsync(id, cancellationToken);
 
         if (user is null)
-            return Result<bool>.Failure(404, "User not found!");
+            return Result<bool>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "User not found!");
 
         user.Deactivate();
 
@@ -101,7 +106,7 @@ public class UserService : IUserService
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Result<bool>.Success(true, "User deactived with success!");
+        return Result<bool>.Success(Convert.ToInt32(HttpStatusCode.OK), true, "User deactived with success!");
     }
 
     public async Task<Result<bool>> ActivateAsync(Guid id, CancellationToken cancellationToken)
@@ -109,7 +114,7 @@ public class UserService : IUserService
         var user = await _userRepository.GetByIdAsync(id, cancellationToken);
 
         if (user is null)
-            return Result<bool>.Failure(404, "User not found!");
+            return Result<bool>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "User not found!");
 
         user.Activate();
 
@@ -117,7 +122,7 @@ public class UserService : IUserService
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Result<bool>.Success(true, "User actived with success!");
+        return Result<bool>.Success(Convert.ToInt32(HttpStatusCode.OK), true, "User actived with success!");
     }
 
     public async Task<Result<bool>> ChangeRoleAsync(
@@ -127,15 +132,15 @@ public class UserService : IUserService
         var user = await _userRepository.GetByIdAsync(changeUserRoleRequest.UserId, cancellationToken);
 
         if (user is null)
-            return Result<bool>.Failure(404, "User not found!");
+            return Result<bool>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "User not found!");
 
         var role = await _roleRepository.GetByIdAsync(changeUserRoleRequest.RoleId, cancellationToken);
 
         if (role is null)
-            return Result<bool>.Failure(404, "Role not found!");
+            return Result<bool>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "Role not found!");
 
         if (user.RoleId == role.Id)
-            return Result<bool>.Failure(400, "Role already assigned!");
+            return Result<bool>.Failure(Convert.ToInt32(HttpStatusCode.BadRequest), "Role already assigned!");
 
         user.ChangeRole(role.Id);
 
@@ -143,6 +148,6 @@ public class UserService : IUserService
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Result<bool>.Success(true, "Role already assigned with success!");
+        return Result<bool>.Success(Convert.ToInt32(HttpStatusCode.OK), true, "Role already assigned with success!");
     }
 }

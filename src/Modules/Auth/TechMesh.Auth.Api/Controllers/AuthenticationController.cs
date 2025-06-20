@@ -1,4 +1,5 @@
 ﻿using TechMesh.Auth.Application.Interfaces.Services;
+using TechMesh.Auth.Application.Interfaces.Services.Auth;
 
 namespace TechMesh.Auth.Api.Controllers;
 

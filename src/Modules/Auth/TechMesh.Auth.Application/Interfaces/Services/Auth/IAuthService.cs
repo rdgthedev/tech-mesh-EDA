@@ -1,4 +1,4 @@
-﻿namespace TechMesh.Auth.Application.Interfaces.Services;
+﻿namespace TechMesh.Auth.Application.Interfaces.Services.Auth;
 
 public interface IAuthService
 {

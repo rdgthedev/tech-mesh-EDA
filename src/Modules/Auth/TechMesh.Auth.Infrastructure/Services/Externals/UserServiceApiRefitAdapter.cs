@@ -13,6 +13,6 @@ public class UserServiceApiRefitAdapter : IUserServiceApiRefitAdapter
 
         return !response.IsSuccessStatusCode
             ? Result<bool>.Failure(Convert.ToInt32(response.StatusCode), "Failed to create user in external service")
-            : Result<bool>.Success(Convert.ToInt32(response.StatusCode), true);
+            : Result<bool>.Success( true);
     }
 }

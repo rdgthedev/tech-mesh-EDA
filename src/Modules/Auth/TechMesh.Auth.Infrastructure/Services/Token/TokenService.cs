@@ -1,4 +1,6 @@
-﻿namespace TechMesh.Auth.Infrastructure.Services.Token;
+﻿using System.Net;
+
+namespace TechMesh.Auth.Infrastructure.Services.Token;
 
 public class TokenService : ITokenService
 {
@@ -35,8 +37,9 @@ public class TokenService : ITokenService
             return Result<bool>.Failure(404, "Token not exist!");
 
         await _tokenRepository.DeleteAsync(tokenResult, cancellationToken);
+
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Result<bool>.Success();
+        return Result<bool>.Success(Convert.ToInt32(HttpStatusCode.NoContent));
     }
 }

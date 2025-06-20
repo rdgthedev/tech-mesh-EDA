@@ -18,7 +18,8 @@ public class User : Entity
     [MaxLength(128)]
     public EUserStatus Status { get; private set; }
 
-    [ForeignKey("RoleId")] public Guid RoleId { get; private set; }
+    [ForeignKey("RoleId")] 
+    public Guid RoleId { get; private set; }
     public Role Role { get; private set; } = null!;
 
     private User()

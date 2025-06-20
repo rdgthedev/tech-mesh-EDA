@@ -33,14 +33,16 @@ public class AuthService : IAuthService
             .ExistsAsync(u => u.Email == request.Email, cancellationToken);
 
         if (userExistsResponse.IsSuccess)
-            return Result<AuthTokensResponse>.Failure((int)HttpStatusCode.BadRequest, "User already exists!");
+            return Result<AuthTokensResponse>
+                .Failure(Convert.ToInt32(HttpStatusCode.BadRequest), "User already exists!");
 
         var passwordHash = _passwordHasherAdapter.Hash(request.Password);
 
         var roleResponse = await _roleService.GetByIdOrDefault(request.RoleId, cancellationToken);
 
         if (!roleResponse.IsSuccess)
-            return Result<AuthTokensResponse>.Failure((int)HttpStatusCode.NotFound, "Role not found!");
+            return Result<AuthTokensResponse>
+                .Failure(Convert.ToInt32(HttpStatusCode.NotFound), "Role not found!");
 
         var user = User.Create(request.Email, passwordHash, roleResponse.Data!.Id);
 
@@ -57,10 +59,11 @@ public class AuthService : IAuthService
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Result<AuthTokensResponse>.Success(
-            (int)HttpStatusCode.Created,
-            new AuthTokensResponse(accessToken, refreshToken),
-            "User registered with success!");
+        return Result<AuthTokensResponse>
+            .Success(
+                Convert.ToInt32(HttpStatusCode.Created),
+                new AuthTokensResponse(accessToken, refreshToken),
+                "User registered with success!");
     }
 
     public async Task<Result<AuthTokensResponse>> SignInAsync(
@@ -71,20 +74,25 @@ public class AuthService : IAuthService
             .GetUserWithRoleByEmailAsync(signInUserRequest.Email, cancellationToken);
 
         if (!userResponse.IsSuccess)
-            return Result<AuthTokensResponse>.Failure((int)HttpStatusCode.BadRequest, "Email or Password invalid!");
+            return Result<AuthTokensResponse>
+                .Failure(Convert.ToInt32(HttpStatusCode.BadRequest), "Email or Password invalid!");
 
         var userData = userResponse.Data;
 
         var isPasswordValid = _passwordHasherAdapter.Verify(signInUserRequest.Password, userData?.PasswordHash!);
 
         if (!isPasswordValid)
-            return Result<AuthTokensResponse>.Failure((int)HttpStatusCode.BadRequest, "Email or Password invalid!");
+            return Result<AuthTokensResponse>
+                .Failure(Convert.ToInt32(HttpStatusCode.BadRequest), "Email or Password invalid!");
 
         var accessToken = await _jwtService.GenerateAccessToken(userData!.Id, userData.Role!.Name);
 
         var refreshToken = (await _jwtService.GenerateRefreshToken(userData.Id, cancellationToken)).Data;
 
         return Result<AuthTokensResponse>
-            .Success(new AuthTokensResponse(accessToken, refreshToken!.Value), "User successfully signed in!");
+            .Success(
+                Convert.ToInt32(HttpStatusCode.OK),
+                new AuthTokensResponse(accessToken, refreshToken!.Value),
+                "User successfully signed in!");
     }
 }

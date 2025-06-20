@@ -9,25 +9,10 @@ public class Result<TData>
     public List<string> Errors { get; private set; } = [];
 
 
-    private Result(TData data, string message)
+    private Result(TData data, string message, int statusCode = (int)HttpStatusCode.OK)
     {
-        StatusCode = Convert.ToInt32(HttpStatusCode.OK);
         IsSuccess = true;
-        Data = data;
-        Message = message;
-    }
-
-    private Result(HttpStatusCode statusCode, string? message = null)
-    {
-        StatusCode = Convert.ToInt32(statusCode);
-        IsSuccess = true;
-        Message = message;
-    }
-
-    private Result(int statusCode, TData data, string message)
-    {
         StatusCode = statusCode;
-        IsSuccess = true;
         Data = data;
         Message = message;
     }
@@ -39,7 +24,7 @@ public class Result<TData>
         Errors.AddRange(errors);
     }
 
-    private Result(bool isSuccess = true)
+    private Result(int statusCode, bool isSuccess = true)
     {
         IsSuccess = isSuccess;
     }
@@ -47,10 +32,10 @@ public class Result<TData>
     public static Result<TData> Failure(int? statusCode, params string[] errors) =>
         new(statusCode, default, errors);
 
-    public static Result<TData> Success(int statusCode, TData data, string message = "")
-        => new(statusCode, data, message);
+    public static Result<TData> Success(int? statusCode, TData data, string message = "")
+        => new(data, message, statusCode ?? (int)HttpStatusCode.OK);
 
-    public static Result<TData> Success() => new();
+    public static Result<TData> Success(int statusCode) => new(statusCode);
 
     public static Result<TData> Success(TData data, string message = "") => new(data, message);
 }

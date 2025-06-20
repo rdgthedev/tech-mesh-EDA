@@ -13,12 +13,12 @@ public static class Mapper
             .ToList();
 
     public static UserDetailsResponse Map(User user) => new(user.Id, user.Email, user.Password, user.Role);
-
+    
     public static TokenResponse? Map(Token? token)
         => token is null
             ? null
             : new TokenResponse(token.Value.ToString(), token.ExpirationTime, token.Type);
-
+    
     public static CreateUserRequest Map(RegisterUserRequest registerUserRequest) =>
         new()
         {

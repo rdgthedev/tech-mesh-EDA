@@ -18,10 +18,10 @@ public class RoleService : IRoleService
         var roles = await _roleRepository.GetAllAsync(cancellationToken);
 
         if (!roles.Any())
-            return Result<List<RoleResponse>>.Failure(404, "Roles not found!");
+            return Result<List<RoleResponse>>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "Roles not found!");
 
         return Result<List<RoleResponse>>.Success(
-            200,
+            Convert.ToInt32(HttpStatusCode.OK),
             Mapper.Map(roles),
             "Roles found with success!");
     }
@@ -31,21 +31,26 @@ public class RoleService : IRoleService
         var role = await _roleRepository.GetByIdAsync(id, cancellationToken);
 
         if (role is null)
-            return Result<RoleResponse?>.Failure(404, "Role not found!");
+            return Result<RoleResponse?>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "Role not found!");
 
-        return Result<RoleResponse?>.Success(Mapper.Map(role), "Role found with success!");
+        return Result<RoleResponse?>.Success(
+            Convert.ToInt32(HttpStatusCode.OK),
+            Mapper.Map(role),
+            "Role found with success!");
     }
 
     public async Task<Result<RoleResponse>> GetByIdOrDefault(Guid? id, CancellationToken cancellationToken)
     {
-        var roleResponse = id is not null && id != Guid.Empty
-            ? await GetByIdAsync(id ?? Guid.Empty, cancellationToken)
+        var roleResponse = id.HasValue && id != Guid.Empty
+            ? await GetByIdAsync((Guid)id, cancellationToken)
             : await GetByNameAsync(nameof(User), cancellationToken);
 
         if (!roleResponse.IsSuccess)
             return Result<RoleResponse>.Failure(roleResponse.StatusCode, roleResponse.Errors.ToArray());
 
-        return Result<RoleResponse>.Success((int)roleResponse.StatusCode!, roleResponse.Data!, roleResponse.Message!);
+        return Result<RoleResponse>.Success(
+            roleResponse.Data!,
+            roleResponse.Message!);
     }
 
     public async Task<Result<RoleResponse?>> GetByNameAsync(string name, CancellationToken cancellationToken)
@@ -53,9 +58,11 @@ public class RoleService : IRoleService
         var role = await _roleRepository.GetByNameAsync(name, cancellationToken);
 
         if (role is null)
-            return Result<RoleResponse?>.Failure(404, "Role not found!");
+            return Result<RoleResponse?>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "Role not found!");
 
-        return Result<RoleResponse?>.Success(Mapper.Map(role), "Role found with success!");
+        return Result<RoleResponse?>.Success(
+            Mapper.Map(role),
+            "Role found with success!");
     }
 
     public async Task<Result<bool>> CreateAsync(
@@ -65,13 +72,13 @@ public class RoleService : IRoleService
         var role = await _roleRepository.GetByNameAsync(createRoleRequest.Name, cancellationToken);
 
         if (role is not null)
-            return Result<bool>.Failure(404, "Role already exists!");
+            return Result<bool>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "Role already exists!");
 
         await _roleRepository.CreateAsync(new Role(createRoleRequest.Name), cancellationToken);
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Result<bool>.Success(true, "Role found with success!");
+        return Result<bool>.Success(Convert.ToInt32(HttpStatusCode.OK), true, "Role found with success!");
     }
 
     public async Task<Result<bool>> UpdateAsync(
@@ -82,7 +89,7 @@ public class RoleService : IRoleService
         var role = await _roleRepository.GetByIdAsync(id, cancellationToken);
 
         if (role is null)
-            return Result<bool>.Failure(404, "Role not found exists!");
+            return Result<bool>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "Role not found exists!");
 
         role.ChangeName(updateRoleRequest.Name);
 
@@ -90,7 +97,7 @@ public class RoleService : IRoleService
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Result<bool>.Success(true, "Role updated with success!");
+        return Result<bool>.Success(Convert.ToInt32(HttpStatusCode.OK), true, "Role updated with success!");
     }
 
     public async Task<Result<bool>> DeleteAsync(Guid id, CancellationToken cancellationToken)
@@ -98,12 +105,12 @@ public class RoleService : IRoleService
         var role = await _roleRepository.GetByIdAsync(id, cancellationToken);
 
         if (role is null)
-            return Result<bool>.Failure(404, "Role not found exists!");
+            return Result<bool>.Failure(Convert.ToInt32(HttpStatusCode.NotFound), "Role not found exists!");
 
         await _roleRepository.DeleteAsync(role, cancellationToken);
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Result<bool>.Success(true, "Role deleted with success!");
+        return Result<bool>.Success(Convert.ToInt32(HttpStatusCode.OK), true, "Role deleted with success!");
     }
 }
