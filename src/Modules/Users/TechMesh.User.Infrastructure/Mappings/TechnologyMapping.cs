@@ -8,23 +8,33 @@ public class TechnologyMapping : IEntityTypeConfiguration<Technology>
 
         builder.HasKey(t => t.Id);
 
+        builder.Property(t => t.Id)
+            .HasColumnName("id");
+
         builder.OwnsOne(t => t.Name, name =>
         {
             name.Property(n => n.Value)
-                .HasColumnName(nameof(Technology.Name))
+                .HasColumnName("name")
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(128);
         });
 
-        builder.Property(u => u.CreatedAt)
-            .HasColumnName(nameof(Entity.CreatedAt))
+        builder.Property(t => t.CreatedAt)
+            .HasColumnName("created_at")
             .HasColumnType("TIMESTAMP")
             .IsRequired();
 
-        builder.Property(u => u.UpdatedAt)
-            .HasColumnName(nameof(Entity.UpdatedAt))
+        builder.Property(t => t.UpdatedAt)
+            .HasColumnName("updated_at")
             .HasColumnType("TIMESTAMP")
             .IsRequired(false);
+        
+        builder.Property(t => t.DeletedAt)
+            .HasColumnName("deleted_at")
+            .HasColumnType("TIMESTAMP")
+            .IsRequired(false);
+
+        builder.Ignore(t => t.Events);
     }
 }

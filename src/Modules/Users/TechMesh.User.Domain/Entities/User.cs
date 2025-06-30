@@ -1,4 +1,6 @@
-﻿namespace TechMesh.User.Domain.Entities;
+﻿using TechMesh.User.Domain.Events.User;
+
+namespace TechMesh.User.Domain.Entities;
 
 public class User : AggregateRoot
 {
@@ -85,15 +87,15 @@ public class User : AggregateRoot
         AddEvent(new UserDeactivedEvent(Id, Status));
     }
 
-    public void AddTechnology(params UserTechnology[] technologies)
+    public void AddTechnologies(params UserTechnology[] technologies)
     {
         DomainException.When(!technologies.Any(), "The skills cannot empty.");
 
-        var skillsDescriptions = technologies.Select(s => s.TechnologyId);
+        var technologiesIds = technologies.Select(s => s.TechnologyId);
 
-        var skillAlreadyExists = Technologies.Any(s => skillsDescriptions.Contains(s.TechnologyId));
+        var technologiesAlreadyExists = Technologies.Any(s => technologiesIds.Contains(s.TechnologyId));
 
-        DomainException.When(skillAlreadyExists, "The user already has one or more skills entered.");
+        DomainException.When(technologiesAlreadyExists, "The user already has one or more skills entered.");
 
         Technologies.AddRange(technologies);
 

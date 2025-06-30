@@ -4,26 +4,26 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserFactory _userFactory;
+    private readonly ICreateUserFactory _createUserFactory;
 
     public CreateUserCommandHandler(
         IUserRepository userRepository,
         IUnitOfWork unitOfWork,
-        IUserFactory userFactory)
+        ICreateUserFactory createUserFactory)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
-        _userFactory = userFactory;
+        _createUserFactory = createUserFactory;
     }
 
     public async Task<Result<string>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var user = _userFactory.Create(request);
+        var user = await _createUserFactory.Get(request, cancellationToken);
 
         await _userRepository.CreateAsync(user, cancellationToken);
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        return Result<string>.Success(201, user.Id.ToString());
+        return Result<string>.Success(Convert.ToInt32(HttpStatusCode.Created), user.Id.ToString());
     }
 }

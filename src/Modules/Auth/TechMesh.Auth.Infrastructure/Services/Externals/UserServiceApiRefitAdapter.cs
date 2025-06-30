@@ -9,10 +9,21 @@ public class UserServiceApiRefitAdapter : IUserServiceApiRefitAdapter
 
     public async Task<Result<bool>> CreateUserAsync(CreateUserRequest request)
     {
-        var response = await _userServiceApi.CreateUserAsync(request);
+        var rawResponse = await _userServiceApi.CreateUserAsync(request);
 
-        return !response.IsSuccessStatusCode
-            ? Result<bool>.Failure(Convert.ToInt32(response.StatusCode), "Failed to create user in external service")
-            : Result<bool>.Success( true);
+        return await GetResponseFormatted(rawResponse);
+    }
+
+    private static async Task<Result<bool>> GetResponseFormatted(HttpResponseMessage rawResponse)
+    {
+        if (rawResponse.IsSuccessStatusCode)
+            return Result<bool>.Success(true);
+
+        var responseConverted = await rawResponse.Content.ReadFromJsonAsync<Result<string>>();
+
+        return Result<bool>.Failure(
+            Convert.ToInt32(responseConverted?.StatusCode ?? (int?)rawResponse.StatusCode),
+            "Failed to create user in external user service!",
+            responseConverted?.Errors.ToArray() ?? []);
     }
 }

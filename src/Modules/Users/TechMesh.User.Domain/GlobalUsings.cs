@@ -6,3 +6,7 @@ global using TechMesh.Domain.Entities;
 global using TechMesh.Domain.Exception;
 global using TechMesh.Domain.Events;
 global using TechMesh.User.Domain.ValueObjects;
+global using TechMesh.Domain.Interfaces.UnitOfWork;
+global using TechMesh.User.Domain.Interfaces;
+global using TechMesh.User.Domain.Interfaces.Repositories;
+global using TechMesh.User.Domain.Events.Technology;

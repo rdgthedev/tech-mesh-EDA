@@ -30,7 +30,7 @@ public class AuthService : IAuthService
         CancellationToken cancellationToken)
     {
         var userExistsResponse = await _userService
-            .ExistsAsync(u => u.Email == request.Email, cancellationToken);
+            .ExistsAsync(u => u.Email.ToUpper() == request.Email.ToUpper(), cancellationToken);
 
         if (userExistsResponse.IsSuccess)
             return Result<AuthTokensResponse>
@@ -49,7 +49,8 @@ public class AuthService : IAuthService
         var apiResponse = await _userServiceApiRefitAdapter.CreateUserAsync(Mapper.Map(request));
 
         if (!apiResponse.IsSuccess)
-            return Result<AuthTokensResponse>.Failure(apiResponse.StatusCode, apiResponse.Errors.ToArray());
+            return Result<AuthTokensResponse>
+                .Failure(apiResponse.StatusCode, apiResponse.Message, apiResponse.Errors.ToArray());
 
         await _userService.CreateAsync(user, cancellationToken);
 

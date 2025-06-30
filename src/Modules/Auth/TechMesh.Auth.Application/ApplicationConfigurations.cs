@@ -1,6 +1,6 @@
 ﻿namespace TechMesh.Auth.Application;
 
-public static class ApplicationConfigrations
+public static class ApplicationConfigurations
 {
     public static void AddServicesConfigrations(this IServiceCollection services)
     {

@@ -1,4 +1,4 @@
-﻿namespace TechMesh.User.Domain.Events;
+﻿namespace TechMesh.User.Domain.Events.User;
 
 public class UserBirthDateChangedEvent : Event
 {

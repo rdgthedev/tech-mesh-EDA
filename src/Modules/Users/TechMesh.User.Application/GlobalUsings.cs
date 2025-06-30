@@ -12,3 +12,8 @@ global using TechMesh.User.Application.Abstracts;
 global using TechMesh.User.Application.Validators.User;
 global using System.Net;
 global using TechMesh.User.Domain.ValueObjects;
+global using Microsoft.Extensions.DependencyInjection;
+global using TechMesh.User.Application.Behaviors;
+global using TechMesh.User.Application.Handlers;
+global using TechMesh.User.Domain.Interfaces;
+global using TechMesh.User.Application.Extensions;

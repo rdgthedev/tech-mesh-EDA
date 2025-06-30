@@ -1,6 +1,4 @@
-﻿using TechMesh.Auth.Infrastructure.Contexts;
-
-namespace TechMesh.Auth.Infrastructure.Persistence.Repositories;
+﻿namespace TechMesh.Auth.Infrastructure.Persistence.Repositories;
 
 public class RoleRepository : IRoleRepository
 {
@@ -16,7 +14,7 @@ public class RoleRepository : IRoleRepository
         => await _context.Roles.AsNoTracking().FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
 
     public async Task<Role?> GetByNameAsync(string name, CancellationToken cancellationToken)
-        => await _context.Roles.AsNoTracking().FirstOrDefaultAsync(r => r.Name == name, cancellationToken);
+        => await _context.Roles.AsNoTracking().FirstOrDefaultAsync(r => r.Name.ToUpper() == name.ToUpper(), cancellationToken);
 
     public async Task CreateAsync(Role role, CancellationToken cancellationToken)
         => await _context.Roles.AddAsync(role, cancellationToken);

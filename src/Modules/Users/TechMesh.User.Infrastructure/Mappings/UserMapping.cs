@@ -8,10 +8,13 @@ public class UserMapping : IEntityTypeConfiguration<Domain.Entities.User>
 
         builder.HasKey(u => u.Id);
 
+        builder.Property(u => u.Id)
+            .HasColumnName("id");
+
         builder.OwnsOne(u => u.FullName, fullName =>
         {
             fullName.Property(fn => fn.Value)
-                .HasColumnName(nameof(FullName))
+                .HasColumnName("full_name")
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(128);
@@ -20,7 +23,7 @@ public class UserMapping : IEntityTypeConfiguration<Domain.Entities.User>
         builder.OwnsOne(u => u.Email, email =>
         {
             email.Property(e => e.Address)
-                .HasColumnName(nameof(Email))
+                .HasColumnName("email")
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(256);
@@ -29,7 +32,7 @@ public class UserMapping : IEntityTypeConfiguration<Domain.Entities.User>
         builder.OwnsOne(u => u.BirthDate, birthDate =>
         {
             birthDate.Property(b => b.Value)
-                .HasColumnName(nameof(BirthDate))
+                .HasColumnName("birth_date")
                 .HasColumnType("TIMESTAMP")
                 .IsRequired();
         });
@@ -37,7 +40,7 @@ public class UserMapping : IEntityTypeConfiguration<Domain.Entities.User>
         builder.OwnsOne(u => u.PhoneNumber, phoneNumber =>
         {
             phoneNumber.Property(pn => pn.Value)
-                .HasColumnName(nameof(PhoneNumber))
+                .HasColumnName("phone_number")
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(11);
@@ -46,70 +49,75 @@ public class UserMapping : IEntityTypeConfiguration<Domain.Entities.User>
         builder.OwnsOne(u => u.Address, address =>
         {
             address.Property(a => a.Street)
-                .HasColumnName(nameof(Address.Street))
+                .HasColumnName("street")
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(128);
 
             address.Property(a => a.Neighborhood)
-                .HasColumnName(nameof(Address.Neighborhood))
+                .HasColumnName("neighborhood")
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(128);
 
             address.Property(a => a.City)
-                .HasColumnName(nameof(Address.City))
+                .HasColumnName("city")
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(128);
 
             address.Property(a => a.Country)
-                .HasColumnName(nameof(Address.Country))
+                .HasColumnName("country")
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(128);
 
             address.Property(a => a.Number)
-                .HasColumnName(nameof(Address.Number))
+                .HasColumnName("number")
                 .HasColumnType("INTEGER")
                 .IsRequired();
 
             address.Property(a => a.State)
-                .HasColumnName(nameof(Address.State))
+                .HasColumnName("state")
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(50);
 
             address.Property(a => a.ZipCode)
-                .HasColumnName(nameof(Address.ZipCode))
+                .HasColumnName("zip_code")
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(50);
 
             address.Property(a => a.Complement)
-                .HasColumnName(nameof(Address.Complement))
+                .HasColumnName("complement")
                 .HasColumnType("VARCHAR")
                 .IsRequired()
                 .HasMaxLength(50);
         });
 
         builder.Property(u => u.Status)
-            .HasColumnName(nameof(Domain.Entities.User.Status))
+            .HasColumnName("status")
             .HasConversion<string>()
             .IsRequired();
 
         builder.Property(u => u.Level)
-            .HasColumnName(nameof(Domain.Entities.User.Level))
+            .HasColumnName("level")
             .HasConversion<string>()
             .IsRequired();
 
         builder.Property(u => u.CreatedAt)
-            .HasColumnName(nameof(Entity.CreatedAt))
+            .HasColumnName("created_at")
             .HasColumnType("TIMESTAMP")
             .IsRequired();
 
         builder.Property(u => u.UpdatedAt)
-            .HasColumnName(nameof(Entity.UpdatedAt))
+            .HasColumnName("updated_at")
+            .HasColumnType("TIMESTAMP")
+            .IsRequired(false);
+
+        builder.Property(u => u.DeletedAt)
+            .HasColumnName("deleted_at")
             .HasColumnType("TIMESTAMP")
             .IsRequired(false);
 

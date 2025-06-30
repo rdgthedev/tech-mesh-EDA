@@ -8,13 +8,17 @@ public class UserTechnologyMapping : IEntityTypeConfiguration<UserTechnology>
 
         builder.HasKey(ut => new { ut.UserId, ut.TechnologyId });
 
-        builder.HasOne(u => u.User)
-            .WithMany(u => u.Technologies)
+        builder.Property(ut => ut.UserId).HasColumnName("user_id");
+
+        builder.Property(ut => ut.TechnologyId).HasColumnName("technology_id");
+
+        builder.HasOne(ut => ut.User)
+            .WithMany(ut => ut.Technologies)
             .HasForeignKey(u => u.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(u => u.Technology)
-            .WithMany(u => u.Users)
+        builder.HasOne(ut => ut.Technology)
+            .WithMany(ut => ut.Users)
             .HasForeignKey(u => u.TechnologyId)
             .OnDelete(DeleteBehavior.Cascade);
     }

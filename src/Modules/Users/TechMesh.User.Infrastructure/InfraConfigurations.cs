@@ -1,12 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using TechMesh.Domain.Interfaces.UnitOfWork;
-using TechMesh.Infrastructure.UnitOfWork;
-using TechMesh.User.Domain.Interfaces.Repositories;
-using TechMesh.User.Infrastructure.Context;
-using TechMesh.User.Infrastructure.Persistence.Repositories;
-
-namespace TechMesh.User.Infrastructure;
+﻿namespace TechMesh.User.Infrastructure;
 
 public static class InfraConfigurations
 {
@@ -19,6 +11,7 @@ public static class InfraConfigurations
     public static void AddRepositoriesConfigurations(this IServiceCollection services)
     {
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITechnologyRepository, TechnologyRepository>();
     }
 
     public static void AddUnitOfWorkConfigurations(this IServiceCollection services)

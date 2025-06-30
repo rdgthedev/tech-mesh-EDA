@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TechMesh.User.Infrastructure.Context;
@@ -11,9 +12,11 @@ using TechMesh.User.Infrastructure.Context;
 namespace TechMesh.User.Infrastructure.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250620041615_Change_Columns_To_Snake_Case")]
+    partial class Change_Columns_To_Snake_Case
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,8 +37,7 @@ namespace TechMesh.User.Infrastructure.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("TIMESTAMP")
-                        .HasColumnName("deleted_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("TIMESTAMP")
@@ -58,8 +60,7 @@ namespace TechMesh.User.Infrastructure.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("TIMESTAMP")
-                        .HasColumnName("deleted_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Level")
                         .IsRequired()

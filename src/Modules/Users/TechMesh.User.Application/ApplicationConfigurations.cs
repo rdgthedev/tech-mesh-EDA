@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using TechMesh.User.Application.Behaviors;
-using TechMesh.User.Application.Handlers;
+﻿
 
 namespace TechMesh.User.Application;
 
@@ -18,5 +16,13 @@ public static class ApplicationConfigurations
     public static void AddValidatorsConfigurations(this IServiceCollection services)
     {
         services.AddValidatorsFromAssembly(typeof(CreateUserValidator).Assembly);
+    }
+
+    public static void AddDomainServicesConfigurations(this IServiceCollection services)
+    {
+        services
+            .AddTransient<
+                Domain.Interfaces.ICreateUserWithTechnologiesDomainService,
+                Domain.DomainServices.CreateUserWithTechnologiesDomainService>();
     }
 }

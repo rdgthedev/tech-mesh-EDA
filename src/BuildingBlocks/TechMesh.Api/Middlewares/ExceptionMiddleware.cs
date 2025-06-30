@@ -1,4 +1,5 @@
-﻿using JsonSerializer = System.Text.Json.JsonSerializer;
+﻿using System.Text.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace TechMesh.Api.Middlewares;
 
@@ -22,7 +23,13 @@ public class ExceptionMiddleware
 
             var result = Result<string>.Failure(context.Response.StatusCode, ex.Message);
 
-            await context.Response.WriteAsync(JsonSerializer.Serialize(result));
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(result, jsonSerializerOptions));
         }
     }
 }

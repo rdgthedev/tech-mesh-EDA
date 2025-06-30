@@ -6,7 +6,7 @@ public class TechnologyName
 
     public TechnologyName(string value)
     {
-        DomainException.When(!string.IsNullOrEmpty(value), "Value is required.");
+        DomainException.When(string.IsNullOrEmpty(value), "Value is required.");
 
         Value = value;
     }

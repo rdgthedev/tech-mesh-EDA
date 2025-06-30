@@ -1,6 +1,6 @@
 ﻿namespace TechMesh.User.Domain.Entities;
 
-public class Technology : Entity
+public class Technology : AggregateRoot
 {
     public TechnologyName Name { get; private set; } = null!;
     public IReadOnlyCollection<UserTechnology> Users { get; private set; } = null!;
@@ -9,9 +9,22 @@ public class Technology : Entity
     {
     }
 
-    private Technology(TechnologyName name) => Name = name;
+    private Technology(TechnologyName name)
+    {
+        Name = name;
 
-    public static Technology Create(TechnologyName name) => new(name);
+        AddEvent(new TechnologyCreatedEvent(Id, Name));
+    }
+
+    public static Technology Create(TechnologyName name)
+    {
+        Validate(name);
+
+        return new Technology(name);
+    }
+
+    private static void Validate(TechnologyName? name)
+        => DomainException.When(name is null, $"The {nameof(TechnologyName)} object cannot be null.");
 
     public void Update(TechnologyName name)
     {

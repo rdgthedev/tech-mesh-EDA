@@ -6,4 +6,14 @@ public class UserTechnology
     public User User { get; private set; } = null!;
     public Guid TechnologyId { get; private set; }
     public Technology Technology { get; private set; } = null!;
+
+    private UserTechnology()
+    {
+    }
+
+    public UserTechnology(User user, Technology technology)
+    {
+        User = user;
+        Technology = technology;
+    }
 }

@@ -1,6 +1,6 @@
 ﻿namespace TechMesh.User.Application.Factories.Interfaces;
 
-public interface IUserFactory
+public interface ICreateUserFactory
 {
-    Domain.Entities.User Create(CreateUserCommand request);
+    Task<Domain.Entities.User> Get(CreateUserCommand request, CancellationToken cancellationToken);
 }
