@@ -8,6 +8,7 @@ public class AuthService : IAuthService
     private readonly IUserService _userService;
     private readonly IPasswordHasherAdapter _passwordHasherAdapter;
     private readonly IUserServiceApiRefitAdapter _userServiceApiRefitAdapter;
+    private readonly ITokenService _tokenService;
 
     public AuthService(
         IUserService userService,
@@ -15,7 +16,8 @@ public class AuthService : IAuthService
         IRoleService roleService,
         IUnitOfWork unitOfWork,
         IPasswordHasherAdapter passwordHasherAdapter,
-        IUserServiceApiRefitAdapter userServiceApiRefitAdapter)
+        IUserServiceApiRefitAdapter userServiceApiRefitAdapter,
+        ITokenService tokenService)
     {
         _userService = userService;
         _jwtService = jwtService;
@@ -23,6 +25,7 @@ public class AuthService : IAuthService
         _unitOfWork = unitOfWork;
         _passwordHasherAdapter = passwordHasherAdapter;
         _userServiceApiRefitAdapter = userServiceApiRefitAdapter;
+        _tokenService = tokenService;
     }
 
     public async Task<Result<AuthTokensResponse>> RegisterAsync(
@@ -51,19 +54,21 @@ public class AuthService : IAuthService
         if (!apiResponse.IsSuccess)
             return Result<AuthTokensResponse>
                 .Failure(apiResponse.StatusCode, apiResponse.Message, apiResponse.Errors.ToArray());
-
+        
         await _userService.CreateAsync(user, cancellationToken);
 
         var accessToken = await _jwtService.GenerateAccessToken(user.Id, roleResponse.Data.Name);
 
-        var refreshToken = (await _jwtService.GenerateRefreshToken(user.Id, cancellationToken)).Data!.Value;
+        var token = new Token(user.Id, DateTime.UtcNow.AddDays(7), ETokenType.RefreshToken);
+
+        var refreshToken = (await _tokenService.CreateAsync(token, cancellationToken)).Data?.Value;
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
         return Result<AuthTokensResponse>
             .Success(
                 Convert.ToInt32(HttpStatusCode.Created),
-                new AuthTokensResponse(accessToken, refreshToken),
+                new AuthTokensResponse(accessToken, refreshToken!),
                 "User registered with success!");
     }
 
@@ -88,12 +93,16 @@ public class AuthService : IAuthService
 
         var accessToken = await _jwtService.GenerateAccessToken(userData!.Id, userData.Role!.Name);
 
-        var refreshToken = (await _jwtService.GenerateRefreshToken(userData.Id, cancellationToken)).Data;
+        var refreshToken = (await _tokenService
+            .CreateAsync(
+                new Token(userData.Id,
+                    DateTime.UtcNow.AddDays(7),
+                    ETokenType.RefreshToken), cancellationToken)).Data?.Value;
 
         return Result<AuthTokensResponse>
             .Success(
                 Convert.ToInt32(HttpStatusCode.OK),
-                new AuthTokensResponse(accessToken, refreshToken!.Value),
+                new AuthTokensResponse(accessToken, refreshToken!),
                 "User successfully signed in!");
     }
 }

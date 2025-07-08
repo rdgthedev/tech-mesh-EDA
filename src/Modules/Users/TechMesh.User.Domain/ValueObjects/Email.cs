@@ -1,15 +1,13 @@
-﻿using TechMesh.Domain.Exception;
-
-namespace TechMesh.User.Domain.ValueObjects;
+﻿namespace TechMesh.User.Domain.ValueObjects;
 
 public class Email
 {
-    public string Address { get; private set; }
+    public string Address { get; init; }
 
     public Email(string address)
     {
         DomainException.When(string.IsNullOrEmpty(address), "Birth date cannot be in the future");
-
+        
         Address = address;
     }
 

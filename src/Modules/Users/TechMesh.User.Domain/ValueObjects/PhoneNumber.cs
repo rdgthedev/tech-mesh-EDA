@@ -2,7 +2,7 @@
 
 public class PhoneNumber
 {
-    public string Value { get; private set; }
+    public string Value { get; init; }
 
     public PhoneNumber(string value)
     {
@@ -16,8 +16,7 @@ public class PhoneNumber
 
     public override bool Equals(object? obj)
     {
-        return obj is PhoneNumber phoneNumber
-               && phoneNumber.Value == Value;
+        return obj is PhoneNumber phoneNumber && phoneNumber.Value == Value;
     }
 
     public override int GetHashCode() => Value.GetHashCode();

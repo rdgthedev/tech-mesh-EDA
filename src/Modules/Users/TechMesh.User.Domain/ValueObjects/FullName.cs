@@ -2,7 +2,7 @@
 
 public class FullName
 {
-    public string Value { get; private set; }
+    public string Value { get; init; }
 
     public FullName(string value)
     {

@@ -3,15 +3,10 @@
 public class JwtService : IJwtService
 {
     private readonly IOptions<Configuration.JwtOptions> _jwtOptions;
-    private readonly ITokenService _tokenService;
-    private readonly DateTime _expirationTimeRefreshToken = DateTime.UtcNow.AddDays(7);
 
-    public JwtService(
-        IOptions<Configuration.JwtOptions> jwtOptions,
-        ITokenService tokenService)
+    public JwtService(IOptions<Configuration.JwtOptions> jwtOptions)
     {
         _jwtOptions = jwtOptions;
-        _tokenService = tokenService;
     }
 
     public async Task<string> GenerateAccessToken(Guid userId, string roleName)
@@ -33,12 +28,5 @@ public class JwtService : IJwtService
             signingCredentials: credentials);
 
         return await Task.FromResult(new JwtSecurityTokenHandler().WriteToken(jwtToken));
-    }
-
-    public async Task<Result<TokenResponse>> GenerateRefreshToken(Guid userId, CancellationToken cancellationToken)
-    {
-        var token = new Domain.Entities.Token(userId, _expirationTimeRefreshToken, ETokenType.RefreshToken);
-
-        return await _tokenService.CreateAsync(token, cancellationToken);
     }
 }

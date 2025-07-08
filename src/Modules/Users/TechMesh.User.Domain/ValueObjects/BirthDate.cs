@@ -2,7 +2,7 @@
 
 public class BirthDate
 {
-    public DateTime Value { get; private set; }
+    public DateTime Value { get; init; }
 
     public BirthDate(DateTime value)
     {

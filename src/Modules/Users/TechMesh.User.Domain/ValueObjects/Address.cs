@@ -2,14 +2,14 @@
 
 public class Address
 {
-    public string Street { get; private set; }
-    public string Neighborhood { get; private set; }
-    public string City { get; private set; }
-    public string Country { get; private set; }
-    public int Number { get; private set; }
-    public string State { get; private set; }
-    public string ZipCode { get; private set; }
-    public string Complement { get; private set; }
+    public string Street { get; init; }
+    public string Neighborhood { get; init; }
+    public string City { get; init; }
+    public string Country { get; init; }
+    public int Number { get; init; }
+    public string State { get; init; }
+    public string ZipCode { get; init; }
+    public string Complement { get; init; }
 
     public Address(
         string street,

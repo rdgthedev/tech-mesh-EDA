@@ -1,7 +1,4 @@
-﻿using TechMesh.Auth.Application.Interfaces.Services;
-using TechMesh.Auth.Application.Interfaces.Services.Auth;
-
-namespace TechMesh.Auth.Api.Controllers;
+﻿namespace TechMesh.Auth.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/auth")]

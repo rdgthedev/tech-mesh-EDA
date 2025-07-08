@@ -26,7 +26,7 @@ public static class InfraConfigurations
                     IssuerSigningKey =
                         new RsaSecurityKey(
                             JwtHelper.ExtractRsaKey(configuration["JwtOptions:PublicKey"] ?? string.Empty)),
-                    ClockSkew = TimeSpan.Zero // evita tolerância de tempo
+                    ClockSkew = TimeSpan.Zero
                 };
             });
     }

@@ -2,7 +2,7 @@
 
 public class TechnologyName
 {
-    public string Value { get; private set; }
+    public string Value { get; init; }
 
     public TechnologyName(string value)
     {
@@ -14,7 +14,7 @@ public class TechnologyName
     public static implicit operator string(TechnologyName technologyName) => technologyName.Value;
     public static implicit operator TechnologyName(string name) => new(name);
 
-    protected bool Equals(TechnologyName technology) => Value == technology.Value;
+    public override bool Equals(object? obj) => obj is TechnologyName technologyName && technologyName.Value == Value;
 
     public override string ToString() => Value;
 

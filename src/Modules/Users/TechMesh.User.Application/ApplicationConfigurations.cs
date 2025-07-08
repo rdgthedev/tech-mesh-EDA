@@ -1,6 +1,4 @@
-﻿
-
-namespace TechMesh.User.Application;
+﻿namespace TechMesh.User.Application;
 
 public static class ApplicationConfigurations
 {
@@ -22,7 +20,12 @@ public static class ApplicationConfigurations
     {
         services
             .AddTransient<
-                Domain.Interfaces.ICreateUserWithTechnologiesDomainService,
+                ICreateUserWithTechnologiesDomainService,
                 Domain.DomainServices.CreateUserWithTechnologiesDomainService>();
+    }
+
+    public static void AddFactoriesConfigurations(this IServiceCollection services)
+    {
+        services.AddTransient<ICreateUserFactory, CreateUserFactory>();
     }
 }

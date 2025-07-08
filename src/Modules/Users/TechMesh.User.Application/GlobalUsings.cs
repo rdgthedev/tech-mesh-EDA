@@ -17,3 +17,4 @@ global using TechMesh.User.Application.Behaviors;
 global using TechMesh.User.Application.Handlers;
 global using TechMesh.User.Domain.Interfaces;
 global using TechMesh.User.Application.Extensions;
+global using TechMesh.User.Application.Factories;
