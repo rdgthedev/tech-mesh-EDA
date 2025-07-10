@@ -1,4 +1,8 @@
-﻿namespace TechMesh.Auth.Application;
+﻿using TechMesh.Auth.Application.Abstracts.Services.Auth;
+using TechMesh.Auth.Application.Abstracts.Services.Role;
+using TechMesh.Auth.Application.Abstracts.Services.User;
+
+namespace TechMesh.Auth.Application;
 
 public static class ApplicationConfigurations
 {

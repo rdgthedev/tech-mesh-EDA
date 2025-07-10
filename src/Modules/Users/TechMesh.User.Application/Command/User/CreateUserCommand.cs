@@ -1,4 +1,6 @@
-﻿namespace TechMesh.User.Application.Command.User;
+﻿using TechMesh.User.Application.Abstracts.Command;
+
+namespace TechMesh.User.Application.Command.User;
 
 public sealed class CreateUserCommand : Command<Result<string>>
 {

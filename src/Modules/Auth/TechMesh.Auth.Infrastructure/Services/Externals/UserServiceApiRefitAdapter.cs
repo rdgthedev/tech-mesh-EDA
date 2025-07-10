@@ -1,4 +1,6 @@
-﻿namespace TechMesh.Auth.Infrastructure.Services.Externals;
+﻿using TechMesh.Auth.Application.Abstracts.Adapters;
+
+namespace TechMesh.Auth.Infrastructure.Services.Externals;
 
 public class UserServiceApiRefitAdapter : IUserServiceApiRefitAdapter
 {
@@ -19,11 +21,11 @@ public class UserServiceApiRefitAdapter : IUserServiceApiRefitAdapter
         if (rawResponse.IsSuccessStatusCode)
             return Result<bool>.Success(true);
 
-        var responseConverted = await rawResponse.Content.ReadFromJsonAsync<Result<string>>();
+        var responseResult = await rawResponse.Content.ReadFromJsonAsync<Result<string>>();
 
         return Result<bool>.Failure(
-            Convert.ToInt32(responseConverted?.StatusCode ?? (int?)rawResponse.StatusCode),
+            Convert.ToInt32(responseResult?.StatusCode ?? (int?)rawResponse.StatusCode),
             "Failed to create user in external user service!",
-            responseConverted?.Errors.ToArray() ?? []);
+            responseResult?.Errors.ToArray() ?? []);
     }
 }

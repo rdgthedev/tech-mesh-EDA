@@ -1,4 +1,4 @@
-﻿namespace TechMesh.Auth.Application.Interfaces.Services.Infra;
+﻿namespace TechMesh.Auth.Application.Abstracts.Services.Infra;
 
 public interface IJwtService
 {

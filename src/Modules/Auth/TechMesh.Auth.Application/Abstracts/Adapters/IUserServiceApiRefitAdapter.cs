@@ -1,4 +1,4 @@
-﻿namespace TechMesh.Auth.Application.Interfaces.Adapters;
+﻿namespace TechMesh.Auth.Application.Abstracts.Adapters;
 
 public interface IUserServiceApiRefitAdapter
 {

@@ -8,7 +8,7 @@
         public async Task CreateAsync(Domain.Entities.User user, CancellationToken cancellationToken)
             => await _context.AddAsync(user, cancellationToken);
 
-        public async Task<Domain.Entities.User?> GetByEmail(string email, CancellationToken cancellationToken)
+        public async Task<Domain.Entities.User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
             => await _context.Users.FirstOrDefaultAsync(
                 u => u.Email.Address.ToUpper() == email.ToUpper(), cancellationToken);
     }

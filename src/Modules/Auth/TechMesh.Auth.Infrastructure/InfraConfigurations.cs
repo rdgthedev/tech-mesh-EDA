@@ -1,4 +1,7 @@
-﻿namespace TechMesh.Auth.Infrastructure;
+﻿using TechMesh.Auth.Application.Abstracts.Adapters;
+using TechMesh.Auth.Application.Abstracts.Services.Infra;
+
+namespace TechMesh.Auth.Infrastructure;
 
 public static class InfraConfigurations
 {

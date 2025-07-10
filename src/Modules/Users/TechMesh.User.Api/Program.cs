@@ -11,6 +11,7 @@ builder.Services.AddRepositoriesConfigurations();
 builder.Services.AddUnitOfWorkConfigurations();
 builder.Services.AddDomainServicesConfigurations();
 builder.Services.AddFactoriesConfigurations();
+builder.Services.AddMessageBusConfigurations(builder.Configuration);
 
 var app = builder.Build();
 

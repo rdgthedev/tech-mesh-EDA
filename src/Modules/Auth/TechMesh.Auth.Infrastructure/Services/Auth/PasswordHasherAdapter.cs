@@ -1,4 +1,4 @@
-﻿using TechMesh.Auth.Application.Interfaces.Adapters;
+﻿using TechMesh.Auth.Application.Abstracts.Adapters;
 
 namespace TechMesh.Auth.Infrastructure.Services.Auth;
 

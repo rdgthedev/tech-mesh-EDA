@@ -1,6 +1,4 @@
 ﻿global using MediatR;
-global using TechMesh.User.Application.Factories;
-global using TechMesh.User.Application.Factories.Interfaces;
 global using Microsoft.AspNetCore.Mvc;
 global using TechMesh.Api.Controllers;
 global using TechMesh.Application.Results;

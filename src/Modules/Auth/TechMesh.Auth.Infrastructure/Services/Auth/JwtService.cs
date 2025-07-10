@@ -1,4 +1,6 @@
-﻿namespace TechMesh.Auth.Infrastructure.Services.Auth;
+﻿using TechMesh.Auth.Application.Abstracts.Services.Infra;
+
+namespace TechMesh.Auth.Infrastructure.Services.Auth;
 
 public class JwtService : IJwtService
 {

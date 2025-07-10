@@ -1,4 +1,6 @@
-﻿namespace TechMesh.Auth.Api.Controllers;
+﻿using TechMesh.Auth.Application.Abstracts.Services.Infra;
+
+namespace TechMesh.Auth.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/tokens")]

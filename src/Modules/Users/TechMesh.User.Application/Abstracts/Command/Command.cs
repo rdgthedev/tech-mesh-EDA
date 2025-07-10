@@ -1,4 +1,4 @@
-﻿namespace TechMesh.User.Application.Abstracts;
+﻿namespace TechMesh.User.Application.Abstracts.Command;
 
 public abstract class Command<TResult> : IRequest<TResult> where TResult : class
 {

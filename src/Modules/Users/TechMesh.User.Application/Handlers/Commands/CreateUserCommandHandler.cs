@@ -1,4 +1,4 @@
-﻿namespace TechMesh.User.Application.Handlers;
+﻿namespace TechMesh.User.Application.Handlers.Commands;
 
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<string>>
 {

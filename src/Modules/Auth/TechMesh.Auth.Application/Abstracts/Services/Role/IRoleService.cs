@@ -1,4 +1,4 @@
-﻿namespace TechMesh.Auth.Application.Interfaces.Services.Role;
+﻿namespace TechMesh.Auth.Application.Abstracts.Services.Role;
 
 public interface IRoleService
 {

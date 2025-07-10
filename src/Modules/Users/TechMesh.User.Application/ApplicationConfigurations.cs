@@ -1,4 +1,6 @@
-﻿namespace TechMesh.User.Application;
+﻿using TechMesh.User.Application.Handlers.Commands;
+
+namespace TechMesh.User.Application;
 
 public static class ApplicationConfigurations
 {

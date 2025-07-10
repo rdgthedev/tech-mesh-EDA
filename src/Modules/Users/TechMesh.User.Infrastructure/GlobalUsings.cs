@@ -1,8 +1,6 @@
 ﻿global using Microsoft.EntityFrameworkCore;
 global using TechMesh.User.Domain.Entities;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
-global using TechMesh.Domain.Entities;
-global using TechMesh.User.Domain.ValueObjects;
 global using TechMesh.User.Infrastructure.Mappings;
 global using TechMesh.User.Domain.Interfaces.Repositories;
 global using TechMesh.User.Infrastructure.Context;
@@ -11,3 +9,7 @@ global using Microsoft.Extensions.DependencyInjection;
 global using TechMesh.Domain.Interfaces.UnitOfWork;
 global using TechMesh.Infrastructure.UnitOfWork;
 global using TechMesh.User.Infrastructure.Persistence.Repositories;
+global using MassTransit;
+global using TechMesh.User.Application.Abstracts.Command;
+global using TechMesh.User.Application.Abstracts.Messaging;
+global using TechMesh.User.Infrastructure.Messaging;

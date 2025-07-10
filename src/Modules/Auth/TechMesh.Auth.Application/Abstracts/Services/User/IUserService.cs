@@ -1,4 +1,4 @@
-﻿namespace TechMesh.Auth.Application.Interfaces.Services.User;
+﻿namespace TechMesh.Auth.Application.Abstracts.Services.User;
 
 public interface IUserService
 {

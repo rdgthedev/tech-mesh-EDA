@@ -1,4 +1,10 @@
-﻿namespace TechMesh.Auth.Application.Services;
+﻿using TechMesh.Auth.Application.Abstracts.Adapters;
+using TechMesh.Auth.Application.Abstracts.Services.Auth;
+using TechMesh.Auth.Application.Abstracts.Services.Infra;
+using TechMesh.Auth.Application.Abstracts.Services.Role;
+using TechMesh.Auth.Application.Abstracts.Services.User;
+
+namespace TechMesh.Auth.Application.Services;
 
 public class AuthService : IAuthService
 {

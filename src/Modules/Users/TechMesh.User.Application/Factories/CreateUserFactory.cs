@@ -9,22 +9,20 @@ public class CreateUserFactory : ICreateUserFactory
 
     public async Task<Domain.Entities.User> Get(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var address = new Address(
-            request.Street,
-            request.Neighborhood,
-            request.City,
-            request.Country,
-            request.Number,
-            request.State,
-            request.ZipCode,
-            request.Complement!);
-
         var user = await _createUserWithTechnologiesDomainService.Execute(
             request.FullName,
             request.Email,
             request.BirthDate,
             request.PhoneNumber,
-            address,
+            new Address(
+                request.Street,
+                request.Neighborhood,
+                request.City,
+                request.Country,
+                request.Number,
+                request.State,
+                request.ZipCode,
+                request.Complement!),
             request.Level,
             request.Technologies,
             cancellationToken);

@@ -1,4 +1,6 @@
-﻿namespace TechMesh.User.Application.Behaviors;
+﻿using TechMesh.User.Application.Abstracts.Command;
+
+namespace TechMesh.User.Application.Behaviors;
 
 public sealed class ValidationBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>

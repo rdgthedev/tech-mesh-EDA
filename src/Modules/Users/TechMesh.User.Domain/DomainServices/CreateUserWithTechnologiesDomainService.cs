@@ -23,7 +23,7 @@ public class CreateUserWithTechnologiesDomainService : ICreateUserWithTechnologi
         List<string> technologiesNames,
         CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByEmail(email.Address, cancellationToken);
+        var user = await _userRepository.GetByEmailAsync(email.Address, cancellationToken);
 
         DomainException.When(user is not null, "User already exists.");
 
