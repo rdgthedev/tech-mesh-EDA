@@ -8,7 +8,7 @@ public class PublishEventsInterceptor : SaveChangesInterceptor
     {
         _mediator = mediator;
     }
-    
+
     public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(
         DbContextEventData eventData,
         InterceptionResult<int> result,
@@ -16,7 +16,7 @@ public class PublishEventsInterceptor : SaveChangesInterceptor
     {
         var context = eventData.Context ?? throw new ArgumentNullException(nameof(eventData.Context));
 
-        var entries = context.ChangeTracker
+        var entities = context.ChangeTracker
             .Entries<AggregateRoot>()
             .Where(entry => entry.State == EntityState.Added
                             || entry.State == EntityState.Modified
@@ -24,7 +24,7 @@ public class PublishEventsInterceptor : SaveChangesInterceptor
             .Select(entry => entry.Entity)
             .ToList();
 
-        foreach (var entity in entries)
+        foreach (var entity in entities.Where(e => e.Events.Count > 0))
         {
             foreach (var @event in entity.Events)
                 await _mediator.Publish(@event, cancellationToken);

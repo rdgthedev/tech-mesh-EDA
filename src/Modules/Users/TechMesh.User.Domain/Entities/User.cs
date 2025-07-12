@@ -97,7 +97,7 @@ public class User : AggregateRoot
 
         Technologies.AddRange(technologies);
 
-        AddEvent(new UserAddedSkillsEvent(Id, Technologies));
+        // AddEvent(new UserAddedSkillsEvent(Id, Technologies));
     }
 
     public void UpdateDetails(

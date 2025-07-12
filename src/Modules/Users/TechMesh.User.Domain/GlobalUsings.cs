@@ -7,5 +7,5 @@ global using TechMesh.Domain.Events;
 global using TechMesh.User.Domain.ValueObjects;
 global using TechMesh.User.Domain.Interfaces;
 global using TechMesh.User.Domain.Interfaces.Repositories;
-global using TechMesh.User.Domain.Events.Technology;
 global using TechMesh.User.Domain.Events.User;
+global using MediatR;

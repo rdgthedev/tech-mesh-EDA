@@ -13,7 +13,7 @@ public class Technology : AggregateRoot
     {
         Name = name;
 
-        AddEvent(new TechnologyCreatedEvent(Id, Name));
+        // AddEvent(new TechnologyCreatedEvent(Id, Name));
     }
 
     public static Technology Create(TechnologyName name)

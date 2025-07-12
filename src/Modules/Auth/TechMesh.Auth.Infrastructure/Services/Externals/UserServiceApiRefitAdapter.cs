@@ -1,6 +1,4 @@
-﻿using TechMesh.Auth.Application.Abstracts.Adapters;
-
-namespace TechMesh.Auth.Infrastructure.Services.Externals;
+﻿namespace TechMesh.Auth.Infrastructure.Services.Externals;
 
 public class UserServiceApiRefitAdapter : IUserServiceApiRefitAdapter
 {
@@ -13,11 +11,6 @@ public class UserServiceApiRefitAdapter : IUserServiceApiRefitAdapter
     {
         var rawResponse = await _userServiceApi.CreateUserAsync(request);
 
-        return await GetResponseFormatted(rawResponse);
-    }
-
-    private static async Task<Result<bool>> GetResponseFormatted(HttpResponseMessage rawResponse)
-    {
         if (rawResponse.IsSuccessStatusCode)
             return Result<bool>.Success(true);
 

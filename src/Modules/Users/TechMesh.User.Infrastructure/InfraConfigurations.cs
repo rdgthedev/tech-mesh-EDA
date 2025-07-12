@@ -1,7 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using TechMesh.Infrastructure.Interceptors;
-
-namespace TechMesh.User.Infrastructure;
+﻿namespace TechMesh.User.Infrastructure;
 
 public static class InfraConfigurations
 {
@@ -44,7 +41,7 @@ public static class InfraConfigurations
                 cfg.ConfigureJsonSerializerOptions(options =>
                 {
                     options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                    
+
                     return options;
                 });
 

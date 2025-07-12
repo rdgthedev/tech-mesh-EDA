@@ -10,5 +10,7 @@ global using TechMesh.Domain.Interfaces.UnitOfWork;
 global using TechMesh.Infrastructure.UnitOfWork;
 global using TechMesh.User.Infrastructure.Persistence.Repositories;
 global using MassTransit;
-global using TechMesh.Application.Abstracts.Messaging;
 global using TechMesh.Infrastructure.MessageBus;
+global using TechMesh.Application.Abstracts.MessageBus;
+global using System.Text.Json.Serialization;
+global using TechMesh.Infrastructure.Interceptors;

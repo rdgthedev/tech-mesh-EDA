@@ -1,6 +1,5 @@
-﻿using MediatR;
+﻿namespace TechMesh.User.Domain.Events.User;
 
-namespace TechMesh.User.Domain.Events.User;
 public class UserCreatedEvent : Event, INotification
 {
     public string FullName { get; private set; }
