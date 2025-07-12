@@ -8,6 +8,8 @@ public class UserMapping : IEntityTypeConfiguration<Domain.Entities.User>
 
         builder.HasKey(u => u.Id);
 
+        builder.Property(u => u.Id).ValueGeneratedNever();
+
         builder.Property(u => u.Id)
             .HasColumnName("id");
 

@@ -1,6 +1,4 @@
-﻿using TechMesh.User.Domain.Events.User;
-
-namespace TechMesh.User.Domain.Entities;
+﻿namespace TechMesh.User.Domain.Entities;
 
 public class User : AggregateRoot
 {

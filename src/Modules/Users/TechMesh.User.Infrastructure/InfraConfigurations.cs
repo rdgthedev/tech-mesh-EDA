@@ -1,11 +1,20 @@
-﻿namespace TechMesh.User.Infrastructure;
+﻿using System.Text.Json.Serialization;
+using TechMesh.Infrastructure.Interceptors;
+
+namespace TechMesh.User.Infrastructure;
 
 public static class InfraConfigurations
 {
     public static void AddDbConfigurations(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<UserDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+        services.AddScoped<PublishEventsInterceptor>();
+
+        services.AddDbContext<UserDbContext>((serviceProvider, options) =>
+        {
+            options
+                .UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
+                .AddInterceptors(serviceProvider.GetRequiredService<PublishEventsInterceptor>());
+        });
     }
 
     public static void AddRepositoriesConfigurations(this IServiceCollection services)
@@ -25,13 +34,20 @@ public static class InfraConfigurations
         var virtualHost = configuration["RabbitMQ:VirtualHost"] ?? string.Empty;
         var username = configuration["RabbitMQ:Username"] ?? string.Empty;
         var password = configuration["RabbitMQ:Password"] ?? string.Empty;
-        
+
         services.AddMassTransit(x =>
         {
             x.SetKebabCaseEndpointNameFormatter();
 
             x.UsingRabbitMq((context, cfg) =>
             {
+                cfg.ConfigureJsonSerializerOptions(options =>
+                {
+                    options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                    
+                    return options;
+                });
+
                 cfg.Host(host, virtualHost, h =>
                 {
                     h.Username(username);

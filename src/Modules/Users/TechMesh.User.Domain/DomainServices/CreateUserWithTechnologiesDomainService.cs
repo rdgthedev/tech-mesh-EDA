@@ -23,13 +23,13 @@ public class CreateUserWithTechnologiesDomainService : ICreateUserWithTechnologi
         List<string> technologiesNames,
         CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByEmailAsync(email.Address, cancellationToken);
+        var userExists = await _userRepository.GetByEmailAsync(email.Address, cancellationToken);
 
-        DomainException.When(user is not null, "User already exists.");
+        DomainException.When(userExists is not null, "User already exists.");
 
         var technologies = await GetOrCreateTechnologiesAsync(technologiesNames, cancellationToken);
 
-        user = Entities.User.Create(fullName, email, birthDate, phoneNumber, address, level);
+        var user = Entities.User.Create(fullName, email, birthDate, phoneNumber, address, level);
 
         var userTechnologies = technologies
             .Select(technology => new UserTechnology(user, technology))

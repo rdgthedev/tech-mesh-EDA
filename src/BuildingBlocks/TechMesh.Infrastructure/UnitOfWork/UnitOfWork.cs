@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace TechMesh.Infrastructure.UnitOfWork;
+﻿namespace TechMesh.Infrastructure.UnitOfWork;
 
 public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
 {
