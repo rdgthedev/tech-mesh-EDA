@@ -14,7 +14,10 @@ public class RoleRepository : IRoleRepository
         => await _context.Roles.AsNoTracking().FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
 
     public async Task<Role?> GetByNameAsync(string name, CancellationToken cancellationToken)
-        => await _context.Roles.AsNoTracking().FirstOrDefaultAsync(r => r.Name.ToUpper() == name.ToUpper(), cancellationToken);
+        => await _context
+            .Roles
+            .AsNoTracking()
+            .FirstOrDefaultAsync(r => r.Name.ToUpper() == name.ToUpper(), cancellationToken);
 
     public async Task CreateAsync(Role role, CancellationToken cancellationToken)
         => await _context.Roles.AddAsync(role, cancellationToken);

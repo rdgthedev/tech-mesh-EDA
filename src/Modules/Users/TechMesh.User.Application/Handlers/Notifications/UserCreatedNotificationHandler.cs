@@ -8,5 +8,5 @@ public class UserCreatedNotificationHandler : INotificationHandler<UserCreatedEv
         => _bus = bus;
 
     public async Task Handle(UserCreatedEvent notification, CancellationToken cancellationToken)
-        => await _bus.SendAsync(Mapper.Map(notification), address: "queue:user-created", cancellationToken);
+        => await _bus.SendAsync(Mapper.Map(notification), address: "user-created", cancellationToken);
 }

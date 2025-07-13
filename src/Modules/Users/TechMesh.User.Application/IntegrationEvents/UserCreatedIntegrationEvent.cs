@@ -1,6 +1,4 @@
-﻿using TechMesh.Application.Abstracts.Events;
-
-namespace TechMesh.User.Application.IntegrationEvents;
+﻿namespace TechMesh.User.Application.IntegrationEvents;
 
 public record UserCreatedIntegrationEvent(
     Guid Id,

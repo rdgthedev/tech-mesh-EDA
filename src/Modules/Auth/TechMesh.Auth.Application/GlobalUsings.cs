@@ -16,3 +16,8 @@ global using TechMesh.Auth.Domain.Interfaces.Repositories;
 global using TechMesh.Auth.Application.DTOs.Externals;
 global using Microsoft.Extensions.DependencyInjection;
 global using TechMesh.Auth.Application.Services;
+global using TechMesh.Auth.Application.Abstracts.Adapters;
+global using TechMesh.Auth.Application.Abstracts.Services.Auth;
+global using TechMesh.Auth.Application.Abstracts.Services.Infra;
+global using TechMesh.Auth.Application.Abstracts.Services.Role;
+global using TechMesh.Auth.Application.Abstracts.Services.User;
