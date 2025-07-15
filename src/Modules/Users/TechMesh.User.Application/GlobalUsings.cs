@@ -19,7 +19,6 @@ global using TechMesh.User.Application.Factories;
 global using TechMesh.User.Application.Abstracts.Command;
 global using TechMesh.User.Domain.Events.User;
 global using TechMesh.Application.Abstracts.MessageBus;
-global using TechMesh.User.Application.IntegrationEvents;
 global using TechMesh.User.Application.Mappers;
 global using TechMesh.Application.Abstracts.Events;
 global using TechMesh.Application.Abstracts.MessageBus;

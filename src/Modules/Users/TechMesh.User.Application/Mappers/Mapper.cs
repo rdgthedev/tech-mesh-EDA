@@ -1,4 +1,6 @@
-﻿namespace TechMesh.User.Application.Mappers;
+﻿using TechMesh.Application.IntegrationEvents;
+
+namespace TechMesh.User.Application.Mappers;
 
 public static class Mapper
 {

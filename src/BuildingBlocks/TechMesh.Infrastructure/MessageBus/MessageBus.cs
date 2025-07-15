@@ -1,7 +1,4 @@
-﻿using TechMesh.Application.Abstracts.Events;
-using TechMesh.Application.Abstracts.MessageBus;
-
-namespace TechMesh.Infrastructure.MessageBus;
+﻿namespace TechMesh.Infrastructure.MessageBus;
 
 public class MessageBus : IMessageBus
 {

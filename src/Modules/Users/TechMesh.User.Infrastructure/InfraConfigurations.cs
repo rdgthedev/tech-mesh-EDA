@@ -1,4 +1,6 @@
-﻿namespace TechMesh.User.Infrastructure;
+﻿using TechMesh.Application.IntegrationEvents;
+
+namespace TechMesh.User.Infrastructure;
 
 public static class InfraConfigurations
 {
@@ -38,6 +40,9 @@ public static class InfraConfigurations
 
             x.UsingRabbitMq((context, cfg) =>
             {
+                cfg.Message<UserCreatedIntegrationEvent>(cfgMsg
+                    => cfgMsg.SetEntityName("user-created-exchange"));
+
                 cfg.ConfigureJsonSerializerOptions(options =>
                 {
                     options.ReferenceHandler = ReferenceHandler.IgnoreCycles;

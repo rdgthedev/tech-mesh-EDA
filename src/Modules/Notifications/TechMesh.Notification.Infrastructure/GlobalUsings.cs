@@ -1,0 +1,6 @@
+﻿global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using System.Text.Json.Serialization;
+global using MassTransit;
+global using TechMesh.Notification.Application.Consumers;
+global using TechMesh.Application.IntegrationEvents;

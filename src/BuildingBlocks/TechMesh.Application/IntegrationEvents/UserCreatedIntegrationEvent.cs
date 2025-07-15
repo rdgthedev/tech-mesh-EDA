@@ -1,4 +1,4 @@
-﻿namespace TechMesh.User.Application.IntegrationEvents;
+﻿namespace TechMesh.Application.IntegrationEvents;
 
 public record UserCreatedIntegrationEvent(
     Guid Id,
