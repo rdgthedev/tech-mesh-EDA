@@ -1,10 +1,7 @@
-using TechMesh.Notification.Application;
-using TechMesh.Notification.Infrastructure;
-
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplicationServicesConfigurations();
 builder.Services.AddMessageBusConfigurations(builder.Configuration);
+builder.Services.AddEmailSenderConfigurations(builder.Configuration);
 
 var app = builder.Build();
 

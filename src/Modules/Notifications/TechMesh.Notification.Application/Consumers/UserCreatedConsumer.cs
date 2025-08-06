@@ -2,12 +2,12 @@
 
 public class UserCreatedConsumer : IConsumer<UserCreatedIntegrationEvent>
 {
-    private readonly IEmailService _emailService;
+    private readonly IEmailSender _emailSender;
     private readonly ILogger<UserCreatedConsumer> _logger;
 
-    public UserCreatedConsumer(IEmailService emailService, ILogger<UserCreatedConsumer> logger)
+    public UserCreatedConsumer(IEmailSender emailSender, ILogger<UserCreatedConsumer> logger)
     {
-        _emailService = emailService;
+        _emailSender = emailSender;
         _logger = logger;
     }
 
@@ -15,11 +15,14 @@ public class UserCreatedConsumer : IConsumer<UserCreatedIntegrationEvent>
     {
         var userCreated = context.Message;
 
-        _logger.LogInformation("UserCreatedConsumer received event to user with email {email}", userCreated.Email);
+        _logger.LogInformation("UserCreatedConsumer received event to user with email: {email}", userCreated.Email);
 
-        await _emailService.SendAsync(
+        await _emailSender.SendAsync(
+            userCreated.FullName,
             userCreated.Email,
             "Account Confirmation",
-            $"Seu código de confirmação é: {Guid.NewGuid()}");
+            $"Here is your confirmation token: {Guid.NewGuid()}");
+
+        _logger.LogInformation("Email successfully sent to user with email: {email}", userCreated.Email);
     }
 }

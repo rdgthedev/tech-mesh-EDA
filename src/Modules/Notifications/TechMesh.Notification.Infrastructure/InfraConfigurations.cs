@@ -4,6 +4,13 @@ namespace TechMesh.Notification.Infrastructure;
 
 public static class InfraConfigurations
 {
+    public static void AddEmailSenderConfigurations(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<Settings.EmailSettings>(configuration.GetSection("EmailSettings"));
+
+        services.AddTransient<IEmailSender, EmailSender>();
+    }
+
     public static void AddMessageBusConfigurations(this IServiceCollection services, IConfiguration configuration)
     {
         var host = configuration["RabbitMQ:Host"] ?? string.Empty;
